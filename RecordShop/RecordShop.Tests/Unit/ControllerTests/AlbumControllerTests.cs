@@ -97,10 +97,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             var result = await _albumController.GetAlbumByIdAsync(100);
 
-            var okResult = result.Should().BeOfType<NotFoundObjectResult>().Subject;
-            var value = okResult.Value as Album;
-
-            value.Should().BeNull();
+            var notFoundResult = result.Should().BeOfType<NotFoundResult>().Subject;
         }
     }
 }

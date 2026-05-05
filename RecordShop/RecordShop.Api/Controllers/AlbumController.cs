@@ -29,6 +29,11 @@ namespace RecordShop.Api.Controllers
         {
             var album = await _albumService.GetAlbumByIdAsync(id);
 
+            if (album == null)
+            {
+                return NotFound();
+            }
+
             return Ok(album);
         }
     }
