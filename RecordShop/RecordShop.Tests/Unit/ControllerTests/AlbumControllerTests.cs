@@ -38,7 +38,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var value = okResult.Value as List<Album>;
 
             value.Should().NotBeNull();
-            value.Should().NotBeEmpty();
+            value.Should().BeEmpty();
         }
     }
 }
