@@ -63,5 +63,13 @@ namespace RecordShop.Tests.Unit.ControllerTests
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(testList);
         }
+
+        [Test]
+        public async Task AlbumController_ShouldCorrectlyCallServiceOnce_WhenControllerMethodCalled()
+        {
+            await _albumController.GetAllAlbums();
+
+            _albumServiceMock.Verify(a => a.GetAllAlbums(), Times.Once());
+        }
     }
 }
