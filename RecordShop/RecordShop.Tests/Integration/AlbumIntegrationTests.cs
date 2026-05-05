@@ -28,7 +28,7 @@ namespace RecordShop.Tests.Integration
         }
 
         [Test]
-        public async Task GetAllBooksAsyncEndpoint_ReturnsOkAndWholeList()
+        public async Task GetAllAlbumsAsyncEndpoint_ReturnsOkAndWholeList()
         {
             var client = _factory.CreateClient();
 
@@ -50,7 +50,7 @@ namespace RecordShop.Tests.Integration
         }
 
         [Test]
-        public async Task GetAllBooksAsyncEndpoint_ReturnsOkAndEmptyList()
+        public async Task GetAllAlbumsAsyncEndpoint_ReturnsOkAndEmptyList()
         {
             var client = _factory.WithWebHostBuilder(builder =>
             {
@@ -80,7 +80,7 @@ namespace RecordShop.Tests.Integration
         }
 
         [Test]
-        public async Task GetAllBooksAsyncEndpoint_ReturnsCorrectMessageFromMiddlewareWhenServerIsDown()
+        public async Task GetAllAlbumsAsyncEndpoint_ReturnsCorrectMessageFromMiddlewareWhenServerIsDown()
         {
             var client = _factory.WithWebHostBuilder(builder =>
             {
@@ -101,6 +101,27 @@ namespace RecordShop.Tests.Integration
             var content = await response.Content.ReadAsStringAsync();
 
             content.Should().Contain("Server is down :(");
+        }
+
+        [Test]
+        public async Task GetAlbumByIdAsyncEndpoint_ReturnsOkAndAlbumAtIndex4()
+        {
+            var client = _factory.CreateClient();
+            var testAlbum = new Album { Id = 4, Title = "Nevermind", Artist = "Nirvana", Price = 5.99M };
+
+            var response = await client.GetAsync("api/Album/4");
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            album.Should().NotBeNull();
+            album.Should().BeEquivalentTo(testAlbum);
         }
     }
 }
