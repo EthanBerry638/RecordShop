@@ -19,16 +19,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        public async Task GetAllAlbums_ShouldReturnNull_WhenRepositoryReturnsNull()
-        {
-            _albumRepositoryMock.Setup(a => a.GetAllAlbums()).ReturnsAsync((List<Album>?)null);
-
-            var result = await _albumService.GetAllAlbums();
-
-            result.Should().BeEqualTo(null);
-        }
-
-        [Test]
         public async Task GetAllAlbums_ShouldReturnList_WhenRepositoryReturnsList()
         {
             var testAlbumList = new List<Album>

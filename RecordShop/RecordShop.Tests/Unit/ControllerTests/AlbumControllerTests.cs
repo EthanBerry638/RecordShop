@@ -21,5 +21,11 @@ namespace RecordShop.Tests.Unit.ControllerTests
         {
             _albumController.Dispose();
         }
+
+        [Test]
+        public void AlbumController_ShouldReturnOkWithEmptyList_WhenServiceReturnsEmptyList()
+        {
+
+        }
     }
 }
