@@ -86,5 +86,17 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             result.Should().BeNull();
         }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldReturnAlbum_WhenDatabaseDoesAlbumWithSpecifiedId()
+        {
+            var testAlbum = new Album { Id = 3, Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Price = 15.00M };
+            int testId = 3;
+
+            var result = await _albumRepository.GetAlbumByIdAsync(testId);
+
+            result.Should().BeOfType<Album>();
+            result.Should().BeEquivalentTo(testAlbum);
+        }
     }
 }
