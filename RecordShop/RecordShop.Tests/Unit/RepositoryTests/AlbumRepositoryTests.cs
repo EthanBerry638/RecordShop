@@ -7,7 +7,7 @@ using RecordShop.Api.Repositories;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
-    public class RepositoryTests
+    public class AlbumRepositoryTests
     {
         private AlbumRepository _albumRepository;
         private RecordShopContext _context;
