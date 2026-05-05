@@ -8,6 +8,7 @@ using RecordShop.Api.Data;
 using Moq;
 using RecordShop.Api.Repositories;
 using Microsoft.Data.Sqlite;
+using Microsoft.AspNetCore.Http;
 
 namespace RecordShop.Tests.Integration
 {
@@ -122,6 +123,16 @@ namespace RecordShop.Tests.Integration
 
             album.Should().NotBeNull();
             album.Should().BeEquivalentTo(testAlbum);
+        }
+
+        [Test]
+        public async Task GetAlbumByIdAsyncEndpoint_ReturnsNotFound()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/Album/500");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
     }
 }
