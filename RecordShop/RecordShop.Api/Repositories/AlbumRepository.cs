@@ -18,7 +18,7 @@ namespace RecordShop.Api.Repositories
             return await _db.Albums.ToListAsync();
         }
 
-        public async Task<Album> GetAlbumByIdAsync(int id)
+        public async Task<Album?> GetAlbumByIdAsync(int id)
         {
             return await _db.Albums.FirstAsync();
         }
