@@ -99,8 +99,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             var notFoundResult = result.Should().BeOfType<NotFoundResult>().Subject;
         }
+
+        // Bad request is handled by middleware.
     }
 }
-
-
-// Get album by id can either be bad request, not found, or ok
