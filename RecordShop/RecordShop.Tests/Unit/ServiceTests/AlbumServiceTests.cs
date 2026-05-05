@@ -47,5 +47,17 @@ namespace RecordShop.Tests.Unit.ServiceTests
             result.Should().BeEqualTo(testAlbumList);
             result.Should().HaveCount(5);
         }
+
+        [Test]
+        public async Task GetAllAbums_ShouldReturnEmptyList_WhenRepositoryReturnsEmptyList()
+        {
+            var testAlbumList = new List<Album>();
+            _albumRepositoryMock.Setup(a => a.GetAllAlbums()).ReturnsAsync(testAlbumList);
+
+            var result = await _albumService.GetAllAlbums();
+
+            result.Should().BeEqualTo(testAlbumList);
+            result.Should().HaveCount(0);
+        }
     }
 }
