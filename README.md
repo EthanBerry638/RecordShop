@@ -1,24 +1,33 @@
-# RecordShop API
+# RecordShop API 🎶
 
-API for a record shop with CRUD endpoints
+API for managing a record shop inventory
 
-## Key Features
+## Features 💿
 
-In this application through various endpoints you can: 
-Add new albums
-Get all albums
-Get album by id
-Update album price
-Delete album
+Retrieve Inventory: Get all albums or search by specific ID
 
-Each one will have a health endpoint
+Error Handling: Global exception middleware
 
-## Tech Stack
+Testing: Unit and Integration tests for existing endpoints
+
+Health Checks: Endpoint to monitor API and Database health
+
+## Tech Stack 🛠️
 
 Language: C# 11 / .NET 8
-Frameworks: ASP.NET Core and EF Core
+Database: EF Core and SQLite (In-Memory)
 Testing: NUnit, Fluent Assertions and Moq
 
-## Roadmap
+## Getting Started 📖
+1. Clone the repository.
+2. Run dotnet run.
+3. Open https://localhost:7091/swagger to view and test endpoints.
+*Note: Data is in memory and will seed automatically on application restart.*
 
-Authentication
+## Roadmap 🛣️
+
+Finish CRUD endpoints for albums
+Refactor to use DTOs for GET endpoints
+Refactor to use persistent database
+Relational Database Schema: Genres, Artists, Users
+JWT Authentication
