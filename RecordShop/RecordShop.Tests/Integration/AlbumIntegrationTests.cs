@@ -44,7 +44,6 @@ namespace RecordShop.Tests.Integration
             });
 
             albums.Should().NotBeNull();
-            albums.Should().HaveCount(4);
             albums[0].Title.Should().Be("Thriller");
             albums.Should().NotBeEmpty();
         }

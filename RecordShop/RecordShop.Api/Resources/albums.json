@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 1,
+    "Title": "Thriller",
+    "Artist": "Michael Jackson",
+    "Price": 10.99
+  },
+  {
+    "Id": 2,
+    "Title": "Back In Black",
+    "Artist": "AC/DC",
+    "Price": 9.49
+  },
+  {
+    "Id": 3,
+    "Title": "The Dark Side of the Moon",
+    "Artist": "Pink Floyd",
+    "Price": 15.00
+  },
+  {
+    "Id": 4,
+    "Title": "Nevermind",
+    "Artist": "Nirvana",
+    "Price": 5.99
+  },
+  {
+    "Id": 5,
+    "Title": "Rumours",
+    "Artist": "Fleetwood Mac",
+    "Price": 12.50
+  },
+  {
+    "Id": 6,
+    "Title": "Abbey Road",
+    "Artist": "The Beatles",
+    "Price": 14.99
+  }
+]

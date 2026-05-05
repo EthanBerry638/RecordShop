@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
+using System.Text.Json;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
@@ -40,17 +41,12 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         [Test]
         public async Task GetAllAlbumsAsync_ShouldReturnListOfAlbums_WhenDatabaseIsSeeded()
         {
-            var testList = new List<Album>
-            {
-                new Album { Id = 1, Title = "Thriller", Artist = "Michael Jackson", Price = 10.99M },
-                new Album { Id = 2, Title = "Back In Black", Artist = "AC/DC", Price = 9.49M },
-                new Album { Id = 3, Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Price = 15.00M },
-                new Album { Id = 4, Title = "Nevermind", Artist = "Nirvana", Price = 5.99M }
-            };
+            var jsonString = File.ReadAllText("Resources\\albums.json");
+            var expectedAlbums = JsonSerializer.Deserialize<List<Album>>(jsonString);
 
             var result = await _albumRepository.GetAllAlbumsAsync();
 
-            result.Should().BeEquivalentTo(testList);
+            result.Should().BeEquivalentTo(expectedAlbums);
         }
 
         [Test]
