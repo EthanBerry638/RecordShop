@@ -50,7 +50,7 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             var result = await _albumRepository.GetAllAlbums();
 
-            result.Should().BeEqualTo(testList);
+            result.Should().BeEquivalentTo(testList);
         }
     }
 }
