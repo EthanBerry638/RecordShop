@@ -19,6 +19,8 @@ namespace RecordShop.Api.Services
 
         public async Task<Album?> GetAlbumByIdAsync(int id)
         {
+            if (id <= 0) throw new ArgumentException();
+
             return await _albumRepository.GetAlbumByIdAsync(id);
         }
     }
