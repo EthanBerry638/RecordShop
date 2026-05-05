@@ -26,7 +26,7 @@ namespace RecordShop.Tests.Integration
         {
             var client = _factory.CreateClient();
 
-            var response = await client.GetAsync("https://localhost:7091/api/Album");
+            var response = await client.GetAsync("api/Album");
 
             response.EnsureSuccessStatusCode();
 
