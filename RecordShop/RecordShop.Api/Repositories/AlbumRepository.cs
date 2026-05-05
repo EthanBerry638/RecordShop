@@ -20,7 +20,7 @@ namespace RecordShop.Api.Repositories
 
         public async Task<Album?> GetAlbumByIdAsync(int id)
         {
-            return null;
+            return await _db.Albums.FirstOrDefaultAsync(a => a.Id == id);
         }
     }
 }

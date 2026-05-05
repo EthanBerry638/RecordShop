@@ -24,7 +24,7 @@ namespace RecordShop.Api.Controllers
             return Ok(albums);
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetAlbumByIdAsync(int id)
         {
             var album = await _albumService.GetAlbumByIdAsync(id);
