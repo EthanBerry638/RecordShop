@@ -77,7 +77,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        public async Task GetAlbumByIdAsync_ShouldNotThrowAnExceptionWhenRepoReturnsNull()
+        public async Task GetAlbumByIdAsync_ShouldNotThrowAnExceptionAndReturnNull_WhenRepoReturnsNull()
         {
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(10)).ReturnsAsync((Album)null!);
 
