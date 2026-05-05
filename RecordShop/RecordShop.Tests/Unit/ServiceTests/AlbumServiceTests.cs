@@ -85,5 +85,20 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             result.Should().BeNull();
         }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldReturnAlbum_WhenAlbumFoundByRepo()
+        {
+            int id = 1;
+            var testAlbum = new Album { Id = 1, Title = "Test Title1", Artist = "Test Artist1", Price = 0.00M };
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(testAlbum);
+
+            var result = await _albumService.GetAlbumByIdAsync(id);
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(testAlbum);
+            result.Title.Should().Be("Test Title1");
+        }
     }
 }
