@@ -5,5 +5,6 @@ namespace RecordShop.Api.Repositories
     public interface IAlbumRepository
     {
         Task<List<Album>> GetAllAlbumsAsync();
+        Task<Album> GetAlbumByIdAsync(int id);
     }
 }

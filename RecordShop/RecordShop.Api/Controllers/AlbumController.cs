@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Services;
 
 namespace RecordShop.Api.Controllers
@@ -21,6 +22,14 @@ namespace RecordShop.Api.Controllers
             var albums = await _albumService.GetAllAlbumsAsync();
 
             return Ok(albums);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAlbumByIdAsync(int id)
+        {
+            var album = await _albumService.GetAlbumByIdAsync(id);
+
+            return Ok(album);
         }
     }
 }

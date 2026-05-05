@@ -16,5 +16,10 @@ namespace RecordShop.Api.Services
         {
             return await _albumRepository.GetAllAlbumsAsync();
         }
+
+        public async Task<Album> GetAlbumByIdAsync(int id)
+        {
+            return await _albumRepository.GetAlbumByIdAsync(id);
+        }
     }
 }
