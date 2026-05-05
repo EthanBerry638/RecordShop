@@ -75,5 +75,15 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<ArgumentException>();
         }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldNotThrowAnExceptionWhenRepoReturnsNull()
+        {
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(10)).ReturnsAsync((Album)null!);
+
+            var result = await _albumService.GetAlbumByIdAsync(10);
+
+            result.Should().BeNull();
+        }
     }
 }
