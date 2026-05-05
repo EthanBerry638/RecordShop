@@ -2,6 +2,11 @@
 using System.Text.Json;
 using RecordShop.Api.Models.DataModels;
 using FluentAssertions;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using RecordShop.Api.Data;
+using Moq;
+using RecordShop.Api.Repositories;
 
 namespace RecordShop.Tests.Integration
 {
@@ -41,6 +46,36 @@ namespace RecordShop.Tests.Integration
             albums.Should().HaveCount(4);
             albums[0].Title.Should().Be("Thriller");
             albums.Should().NotBeEmpty();
+        }
+
+        [Test]
+        public async Task GetAllBooksAsyncEndpoint_ReturnsOkAndEmptyList()
+        {
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var mockRepo = new Mock<IAlbumRepository>();
+
+                    mockRepo.Setup(r => r.GetAllAlbumsAsync()).ReturnsAsync(new List<Album>());
+
+                    //services.AddScoped(_ => mockRepo.Object);
+                });
+            }).CreateClient();
+
+            var response = await client.GetAsync("api/Album");
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var albums = JsonSerializer.Deserialize<List<Album>>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            albums.Should().NotBeNull();
+            albums.Should().BeEmpty();
         }
     }
 }
