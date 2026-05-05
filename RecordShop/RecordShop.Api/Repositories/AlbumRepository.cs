@@ -6,7 +6,7 @@ namespace RecordShop.Api.Repositories
     {
         public async Task<List<Album?>> GetAllAlbums()
         {
-            
+            return await Task.FromResult(new List<Album?>());
         }
     }
 }
