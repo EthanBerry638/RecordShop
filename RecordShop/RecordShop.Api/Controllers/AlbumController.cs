@@ -6,7 +6,7 @@ namespace RecordShop.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AlbumController : ControllerBase
+    public class AlbumController : Controller
     {
         private readonly IAlbumService _albumService;
 

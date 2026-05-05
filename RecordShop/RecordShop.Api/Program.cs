@@ -1,6 +1,8 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
+using RecordShop.Api.Repositories;
+using RecordShop.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +13,9 @@ keepAliveConnection.Open();
 
 builder.Services.AddDbContext<RecordShopContext>(options =>
          options.UseSqlite(keepAliveConnection));
+
+builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
+builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -34,7 +39,5 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
-
-app.MapGet("/", () => "Hello World!");
 
 app.Run();
