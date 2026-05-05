@@ -31,7 +31,6 @@
     <Folder Include="Integration\" />
     <Folder Include="Unit\ControllerTests\" />
     <Folder Include="Unit\RepositoryTests\" />
-    <Folder Include="Unit\ServiceTests\" />
   </ItemGroup>
 
 </Project>
