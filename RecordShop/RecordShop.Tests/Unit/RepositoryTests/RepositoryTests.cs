@@ -65,5 +65,13 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             result.Should().BeEquivalentTo(testList);
         }
+
+        [Test]
+        public void GetAllAlbums_ShouldThrowException_WhenDatabaseIsDown()
+        {
+            _connection.Close();
+
+            Assert.ThrowsAsync<SqliteException>(async () => await _albumRepository.GetAllAlbums());
+        }
     }
 }
