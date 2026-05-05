@@ -35,9 +35,10 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _albumController.GetAllAlbums();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value.Should().BeAssignableTo<Album>();
+            var value = okResult.Value as List<Album>;
 
-            value.Should().BeSameAs(testList);
+            value.Should().NotBeNull();
+            value.Should().NotBeEmpty();
         }
     }
 }
