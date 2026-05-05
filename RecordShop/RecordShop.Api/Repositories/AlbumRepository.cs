@@ -4,9 +4,9 @@ namespace RecordShop.Api.Repositories
 {
     public class AlbumRepository
     {
-        //public async Task<Album?> GetAllAlbums()
-        //{
+        public async Task<List<Album?>> GetAllAlbums()
+        {
             
-        //}
+        }
     }
 }
