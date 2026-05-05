@@ -4,6 +4,6 @@ namespace RecordShop.Api.Services
 {
     public interface IAlbumService
     {
-       Task<List<Album?>> GetAllAlbums();
+       Task<List<Album>> GetAllAlbums();
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Moq;
 using RecordShop.Api.Controllers;
 using RecordShop.Api.Services;
+using RecordShop.Api.Models.DataModels;
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace RecordShop.Tests.Unit.ControllerTests
 {
@@ -23,9 +26,18 @@ namespace RecordShop.Tests.Unit.ControllerTests
         }
 
         [Test]
-        public void AlbumController_ShouldReturnOkWithEmptyList_WhenServiceReturnsEmptyList()
+        public async Task AlbumController_ShouldReturnOkWithEmptyList_WhenServiceReturnsEmptyList()
         {
+            var testList = new List<Album>();
 
+            _albumServiceMock.Setup(a => a.GetAllAlbums()).ReturnsAsync(testList);
+
+            var result = await _albumController.GetAllAlbums();
+
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var value = okResult.Value.Should().BeAssignableTo<Album>();
+
+            value.Should().BeSameAs(testList);
         }
     }
 }
