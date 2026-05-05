@@ -52,5 +52,18 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             result.Should().BeEquivalentTo(testList);
         }
+
+        [Test]
+        public async Task GetAllAlbums_ShouldReturnEmptyList_WhenDatabaseIsEmpty()
+        {
+            var testList = new List<Album>();
+
+            _context.Albums.RemoveRange(_context.Albums);
+            await _context.SaveChangesAsync();
+
+            var result = await _albumRepository.GetAllAlbums();
+
+            result.Should().BeEquivalentTo(testList);
+        }
     }
 }
