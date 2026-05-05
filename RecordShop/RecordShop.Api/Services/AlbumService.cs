@@ -14,14 +14,7 @@ namespace RecordShop.Api.Services
 
         public async Task<List<Album?>> GetAllAlbums()
         {
-            var allAlbums = await _albumRepository.GetAllAlbums();
-
-            if (allAlbums == null)
-            {
-                return null!;
-            }
-
-            return allAlbums;
+            return await _albumRepository.GetAllAlbums();
         }
     }
 }
