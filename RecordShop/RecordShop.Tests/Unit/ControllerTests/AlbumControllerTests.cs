@@ -100,6 +100,12 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var notFoundResult = result.Should().BeOfType<NotFoundResult>().Subject;
         }
 
-        // Bad request is handled by middleware.
+        [Test]
+        public async Task GetAllAlbumByIdAsync_ShouldCorrectlyCallServiceOnce_WhenControllerMethodCalled()
+        {
+            await _albumController.GetAlbumByIdAsync(1);
+
+            _albumServiceMock.Verify(a => a.GetAlbumByIdAsync(1), Times.Once());
+        }
     }
 }
