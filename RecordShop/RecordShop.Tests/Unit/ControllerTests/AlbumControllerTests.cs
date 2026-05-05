@@ -89,6 +89,19 @@ namespace RecordShop.Tests.Unit.ControllerTests
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(testAlbum);
         }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldReturnNotFound_WhenServiceReturnsNull()
+        {
+            _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(100)).ReturnsAsync((Album)null!);
+
+            var result = await _albumController.GetAlbumByIdAsync(100);
+
+            var okResult = result.Should().BeOfType<NotFoundObjectResult>().Subject;
+            var value = okResult.Value as Album;
+
+            value.Should().BeNull();
+        }
     }
 }
 
