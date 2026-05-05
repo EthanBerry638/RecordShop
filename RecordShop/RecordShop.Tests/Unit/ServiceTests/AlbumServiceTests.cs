@@ -65,5 +65,15 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(3), Times.Once());
         }
+
+        [Test]
+        [TestCase(0)]
+        [TestCase(-10)]
+        public async Task GetAlbumByIdAsync_ShouldThrowException_WhenInvalidIdPassedIn(int id)
+        {
+            var act = () => _albumService.GetAlbumByIdAsync(id);
+
+            await act.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }
