@@ -57,5 +57,13 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Verify(a => a.GetAllAlbumsAsync(), Times.Once());
         }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldOnlyCallRepoOnce_WhenCalled()
+        {
+            var result = await _albumService.GetAlbumByIdAsync(3);
+
+            _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(3), Times.Once());
+        }
     }
 }
