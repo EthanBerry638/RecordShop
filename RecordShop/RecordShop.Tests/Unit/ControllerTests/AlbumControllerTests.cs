@@ -71,5 +71,26 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             _albumServiceMock.Verify(a => a.GetAllAlbumsAsync(), Times.Once());
         }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldReturnOkWithAlbum_WhenServiceReturnsAnAlbum()
+        {
+            var testAlbum = new Album { Id = 2, Title = "TestTitle", Artist = "TestArtist", Price = 12.00M };
+
+            _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(2)).ReturnsAsync(testAlbum);
+
+            var result = await _albumController.GetAlbumByIdAsync(2);
+
+            result.Should().BeOfType <OkObjectResult>();
+
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var value = okResult.Value as Album;
+
+            value.Should().NotBeNull();
+            value.Should().BeEquivalentTo(testAlbum);
+        }
     }
 }
+
+
+// Get album by id can either be bad request, not found, or ok
