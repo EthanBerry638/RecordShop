@@ -1,6 +1,8 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using FluentAssertions;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
+using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
@@ -33,6 +35,22 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         {
             _context.Dispose();
             _connection.Dispose();  
+        }
+
+        [Test]
+        public async Task GetAllAlbums_ShouldReturnListOfAlbums_WhenDatabaseIsSeeded()
+        {
+            var testList = new List<Album> 
+            {
+                new Album { Id = 1, Title = "Thriller", Artist = "Michael Jackson", Price = 10.99M },
+                new Album { Id = 2, Title = "Back In Black", Artist = "AC/DC", Price = 9.49M },
+                new Album { Id = 3, Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Price = 15.00M },
+                new Album { Id = 4, Title = "Nevermind", Artist = "Nirvana", Price = 5.99M }
+            };
+
+            var result = await _albumRepository.GetAllAlbums();
+
+            result.Should().BeEqualTo(testList);
         }
     }
 }
