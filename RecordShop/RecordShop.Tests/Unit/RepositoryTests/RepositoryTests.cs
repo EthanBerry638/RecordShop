@@ -71,7 +71,9 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         {
             _connection.Close();
 
-            Assert.ThrowsAsync<SqliteException>(async () => await _albumRepository.GetAllAlbums());
+            Func<Task> act = async () => await _albumRepository.GetAllAlbums();
+
+            act.Should().ThrowAsync<SqliteException>();
         }
     }
 }
