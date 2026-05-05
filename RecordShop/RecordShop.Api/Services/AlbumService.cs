@@ -5,9 +5,9 @@ namespace RecordShop.Api.Services
 {
     public class AlbumService : IAlbumService
     {
-        private readonly AlbumRepository _albumRepository;
+        private readonly IAlbumRepository _albumRepository;
 
-        public AlbumService(AlbumRepository albumRepository)
+        public AlbumService(IAlbumRepository albumRepository)
         {
            _albumRepository = albumRepository;
         }
