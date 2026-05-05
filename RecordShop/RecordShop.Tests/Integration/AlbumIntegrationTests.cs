@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using RecordShop.Api.Data;
 using Moq;
 using RecordShop.Api.Repositories;
+using Microsoft.Data.Sqlite;
 
 namespace RecordShop.Tests.Integration
 {
@@ -59,7 +60,7 @@ namespace RecordShop.Tests.Integration
 
                     mockRepo.Setup(r => r.GetAllAlbumsAsync()).ReturnsAsync(new List<Album>());
 
-                    //services.AddScoped(_ => mockRepo.Object);
+                    services.AddScoped(_ => mockRepo.Object);
                 });
             }).CreateClient();
 
@@ -76,6 +77,30 @@ namespace RecordShop.Tests.Integration
 
             albums.Should().NotBeNull();
             albums.Should().BeEmpty();
+        }
+
+        [Test]
+        public async Task GetAllBooksAsyncEndpoint_ReturnsCorrectMessageFromMiddlewareWhenServerIsDown()
+        {
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var mockRepo = new Mock<IAlbumRepository>();
+
+                    mockRepo.Setup(r => r.GetAllAlbumsAsync()).ThrowsAsync(new SqliteException("Connection failed", 10));
+
+                    services.AddScoped(_ => mockRepo.Object);
+                });
+            }).CreateClient();
+
+            var response = await client.GetAsync("api/Album");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.InternalServerError);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            content.Should().Contain("Server is down :(");
         }
     }
 }
