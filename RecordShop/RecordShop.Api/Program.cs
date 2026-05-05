@@ -1,6 +1,7 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
+using RecordShop.Api.Middleware;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
 
@@ -17,12 +18,16 @@ builder.Services.AddDbContext<RecordShopContext>(options =>
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 
+builder.Services.AddTransient<ExceptionMiddleware>();
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
