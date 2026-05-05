@@ -9,6 +9,7 @@ using Moq;
 using RecordShop.Api.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.AspNetCore.Http;
+using RecordShop.Api.Services;
 
 namespace RecordShop.Tests.Integration
 {
@@ -133,6 +134,30 @@ namespace RecordShop.Tests.Integration
             var response = await client.GetAsync("api/Album/500");
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task GetAlbumByIdAsyncEndpoint_ReturnsCorrectMessageFromMiddlewareWhenUserMakesBadRequest()
+        {
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var mockService = new Mock<IAlbumService>();
+
+                    mockService.Setup(s => s.GetAlbumByIdAsync(0)).ThrowsAsync(new ArgumentException());
+
+                    services.AddScoped(_ => mockService.Object);
+                });
+            }).CreateClient();
+
+            var response = await client.GetAsync("api/Album/0");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            content.Should().Contain("Please enter a number greater than 0");
         }
     }
 }
