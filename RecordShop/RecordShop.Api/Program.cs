@@ -1,10 +1,10 @@
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
+using RecordShop.Api.Health;
 using RecordShop.Api.Middleware;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
-using RecordShop.Api.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 

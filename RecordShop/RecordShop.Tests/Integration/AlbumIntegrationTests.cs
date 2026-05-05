@@ -1,15 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
-using System.Text.Json;
-using RecordShop.Api.Models.DataModels;
-using FluentAssertions;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
-using Microsoft.Extensions.DependencyInjection;
-using RecordShop.Api.Data;
-using Moq;
-using RecordShop.Api.Repositories;
 using Microsoft.Data.Sqlite;
-using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
+using System.Text.Json;
 
 namespace RecordShop.Tests.Integration
 {

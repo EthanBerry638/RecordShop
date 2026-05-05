@@ -1,9 +1,9 @@
-﻿using Moq;
-using RecordShop.Api.Controllers;
-using RecordShop.Api.Services;
-using RecordShop.Api.Models.DataModels;
-using FluentAssertions;
+﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
+using Moq;
+using RecordShop.Api.Controllers;
+using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Services;
 
 namespace RecordShop.Tests.Unit.ControllerTests
 {
@@ -81,7 +81,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             var result = await _albumController.GetAlbumByIdAsync(2);
 
-            result.Should().BeOfType <OkObjectResult>();
+            result.Should().BeOfType<OkObjectResult>();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             var value = okResult.Value as Album;

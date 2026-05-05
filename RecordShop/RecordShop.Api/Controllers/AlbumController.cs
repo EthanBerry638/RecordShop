@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Microsoft.AspNetCore.Mvc;
-using RecordShop.Api.Models.DataModels;
+﻿using Microsoft.AspNetCore.Mvc;
 using RecordShop.Api.Services;
 
 namespace RecordShop.Api.Controllers

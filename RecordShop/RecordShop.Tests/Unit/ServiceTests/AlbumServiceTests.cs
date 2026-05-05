@@ -1,8 +1,8 @@
-﻿using Moq;
+﻿using FluentAssertions;
+using Moq;
+using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
-using RecordShop.Api.Models.DataModels;
-using FluentAssertions;
 
 namespace RecordShop.Tests.Unit.ServiceTests
 {

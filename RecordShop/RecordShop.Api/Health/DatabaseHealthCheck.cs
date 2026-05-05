@@ -9,7 +9,7 @@ namespace RecordShop.Api.Health
 
         public DatabaseHealthCheck(RecordShopContext context)
         {
-            _context = context; 
+            _context = context;
         }
 
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)

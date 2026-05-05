@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
-using System.Threading.Tasks;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
@@ -35,13 +34,13 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         public void TearDown()
         {
             _context.Dispose();
-            _connection.Dispose();  
+            _connection.Dispose();
         }
 
         [Test]
         public async Task GetAllAlbumsAsync_ShouldReturnListOfAlbums_WhenDatabaseIsSeeded()
         {
-            var testList = new List<Album> 
+            var testList = new List<Album>
             {
                 new Album { Id = 1, Title = "Thriller", Artist = "Michael Jackson", Price = 10.99M },
                 new Album { Id = 2, Title = "Back In Black", Artist = "AC/DC", Price = 9.49M },
