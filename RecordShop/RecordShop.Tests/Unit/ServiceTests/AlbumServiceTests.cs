@@ -19,7 +19,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        public async Task GetAllAlbums_ShouldReturnList_WhenRepositoryReturnsList()
+        public async Task GetAllAlbumsAsync_ShouldReturnList_WhenRepositoryReturnsList()
         {
             var testAlbumList = new List<Album>
             {
@@ -30,32 +30,32 @@ namespace RecordShop.Tests.Unit.ServiceTests
                 new Album {Title = "Test Title5", Artist = "Test Artist5", Price = 0.00M },
             };
 
-            _albumRepositoryMock.Setup(a => a.GetAllAlbums()).ReturnsAsync(testAlbumList);
+            _albumRepositoryMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testAlbumList);
 
-            var result = await _albumService.GetAllAlbums();
+            var result = await _albumService.GetAllAlbumsAsync();
 
             result.Should().BeEqualTo(testAlbumList);
             result.Should().HaveCount(5);
         }
 
         [Test]
-        public async Task GetAllAbums_ShouldReturnEmptyList_WhenRepositoryReturnsEmptyList()
+        public async Task GetAllAlbumsAsync_ShouldReturnEmptyList_WhenRepositoryReturnsEmptyList()
         {
             var testAlbumList = new List<Album>();
-            _albumRepositoryMock.Setup(a => a.GetAllAlbums()).ReturnsAsync(testAlbumList);
+            _albumRepositoryMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testAlbumList);
 
-            var result = await _albumService.GetAllAlbums();
+            var result = await _albumService.GetAllAlbumsAsync();
 
             result.Should().BeEqualTo(testAlbumList);
             result.Should().HaveCount(0);
         }
 
         [Test]
-        public async Task GetAllAbums_ShouldOnlyCallRepoOnce_WhenCalled()
+        public async Task GetAllAlbumsAsync_ShouldOnlyCallRepoOnce_WhenCalled()
         {
-            var result = await _albumService.GetAllAlbums();
+            var result = await _albumService.GetAllAlbumsAsync();
 
-            _albumRepositoryMock.Verify(a => a.GetAllAlbums(), Times.Once());
+            _albumRepositoryMock.Verify(a => a.GetAllAlbumsAsync(), Times.Once());
         }
     }
 }

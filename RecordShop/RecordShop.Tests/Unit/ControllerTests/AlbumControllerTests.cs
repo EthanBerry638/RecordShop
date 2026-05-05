@@ -26,13 +26,13 @@ namespace RecordShop.Tests.Unit.ControllerTests
         }
 
         [Test]
-        public async Task AlbumController_ShouldReturnOkWithEmptyList_WhenServiceReturnsEmptyList()
+        public async Task GetAllAlbumsAsync_ShouldReturnOkWithEmptyList_WhenServiceReturnsEmptyList()
         {
             var testList = new List<Album>();
 
-            _albumServiceMock.Setup(a => a.GetAllAlbums()).ReturnsAsync(testList);
+            _albumServiceMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
 
-            var result = await _albumController.GetAllAlbums();
+            var result = await _albumController.GetAllAlbumsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             var value = okResult.Value as List<Album>;
@@ -42,7 +42,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         }
 
         [Test]
-        public async Task AlbumController_ShouldReturnOkWithList_WhenServiceReturnsSeededList()
+        public async Task GetAllAlbumsAsync_ShouldReturnOkWithList_WhenServiceReturnsSeededList()
         {
             var testList = new List<Album>
             {
@@ -53,9 +53,9 @@ namespace RecordShop.Tests.Unit.ControllerTests
                 new Album {Title = "Test Title5", Artist = "Test Artist5", Price = 0.00M },
             };
 
-            _albumServiceMock.Setup(a => a.GetAllAlbums()).ReturnsAsync(testList);
+            _albumServiceMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
 
-            var result = await _albumController.GetAllAlbums();
+            var result = await _albumController.GetAllAlbumsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
             var value = okResult.Value as List<Album>;
@@ -65,11 +65,11 @@ namespace RecordShop.Tests.Unit.ControllerTests
         }
 
         [Test]
-        public async Task AlbumController_ShouldCorrectlyCallServiceOnce_WhenControllerMethodCalled()
+        public async Task GetAllAlbumsAsync_ShouldCorrectlyCallServiceOnce_WhenControllerMethodCalled()
         {
-            await _albumController.GetAllAlbums();
+            await _albumController.GetAllAlbumsAsync();
 
-            _albumServiceMock.Verify(a => a.GetAllAlbums(), Times.Once());
+            _albumServiceMock.Verify(a => a.GetAllAlbumsAsync(), Times.Once());
         }
     }
 }

@@ -16,9 +16,9 @@ namespace RecordShop.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllAlbums()
+        public async Task<IActionResult> GetAllAlbumsAsync()
         {
-            var albums = await _albumService.GetAllAlbums();
+            var albums = await _albumService.GetAllAlbumsAsync();
 
             return Ok(albums);
         }

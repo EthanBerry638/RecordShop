@@ -13,7 +13,7 @@ namespace RecordShop.Api.Repositories
             _db = db;
         }
 
-        public async Task<List<Album>> GetAllAlbums()
+        public async Task<List<Album>> GetAllAlbumsAsync()
         {
             return await _db.Albums.ToListAsync();
         }

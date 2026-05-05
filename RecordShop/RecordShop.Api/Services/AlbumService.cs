@@ -12,9 +12,9 @@ namespace RecordShop.Api.Services
            _albumRepository = albumRepository;
         }
 
-        public async Task<List<Album>> GetAllAlbums()
+        public async Task<List<Album>> GetAllAlbumsAsync()
         {
-            return await _albumRepository.GetAllAlbums();
+            return await _albumRepository.GetAllAlbumsAsync();
         }
     }
 }
