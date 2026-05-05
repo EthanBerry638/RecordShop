@@ -4,6 +4,7 @@ using RecordShop.Api.Data;
 using RecordShop.Api.Middleware;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
+using RecordShop.Api.Health;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +15,9 @@ keepAliveConnection.Open();
 
 builder.Services.AddDbContext<RecordShopContext>(options =>
          options.UseSqlite(keepAliveConnection));
+
+builder.Services.AddHealthChecks()
+    .AddCheck<DatabaseHealthCheck>("Database_Check");
 
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
@@ -44,6 +48,8 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+app.MapHealthChecks("/health");
 
 app.Run();
 
