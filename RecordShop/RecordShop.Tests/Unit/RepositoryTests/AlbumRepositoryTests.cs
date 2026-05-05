@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
+using System.Threading.Tasks;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
@@ -74,6 +75,16 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             Func<Task> act = async () => await _albumRepository.GetAllAlbumsAsync();
 
             act.Should().ThrowAsync<SqliteException>();
+        }
+
+        [Test]
+        public async Task GetAlbumByIdAsync_ShouldReturnNull_WhenDatabaseDoesNotContainAlbumWithSpecifiedId()
+        {
+            int testId = 1000000;
+
+            var result = await _albumRepository.GetAlbumByIdAsync(testId);
+
+            result.Should().BeNull();
         }
     }
 }
