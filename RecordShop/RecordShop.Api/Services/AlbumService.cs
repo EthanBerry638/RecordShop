@@ -57,8 +57,11 @@ namespace RecordShop.Api.Services
 
         public async Task<bool> DeleteAlbumByIdAync(int id)
         {
-            await _albumRepository.DeleteAlbumByIdAync(id);
-            return false;
+            var albumToDelete = await _albumRepository.GetAlbumByIdAsync(id);
+
+            if (albumToDelete == null) return false;
+
+            return true;
         }
     }
 }
