@@ -114,6 +114,17 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
+        [TestCase(2000000)] 
+        public async Task PostAlbumAsync_ShouldThrowException_WhenPriceIsTooHigh(decimal price)
+        {
+            var testDTO = new PostAlbumRequestResponse("Test", "Test", price);
+
+            var act = () => _albumService.PostAlbumAsync(testDTO);
+
+            await act.Should().ThrowAsync<InvalidPriceException>();
+        }
+
+        [Test]
         [TestCase(null)]
         [TestCase("")]
         [TestCase("              ")]
