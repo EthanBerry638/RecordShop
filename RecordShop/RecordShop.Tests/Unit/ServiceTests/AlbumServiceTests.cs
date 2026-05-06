@@ -152,5 +152,24 @@ namespace RecordShop.Tests.Unit.ServiceTests
             _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
             result.Should().BeEquivalentTo(testDTO);
         }
+
+        [Test]
+        [TestCase("             TestTitle", " TestArtist")]
+        [TestCase(" TestTitle", " TestArtist          ")]
+        public async Task PostAlbumAsync_ShouldTrimTrailingAndFollowingWhitespace_WhenGivenValidDTOWithExtraWhitespace(string title, string artist)
+        {
+            var testDTO = new PostAlbumRequestResponse(title, artist, 4M);
+            var testAlbum = new Album { Title = "TestTitle", Artist = "TestArtist", Price = 4M };
+
+            _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
+
+            var result = await _albumService.PostAlbumAsync(testDTO);
+
+            _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
+            result.Should().BeEquivalentTo(testDTO);
+            result.Title.Should().Be("TestTitle");
+            result.Artist.Should().Be("TestArtist");
+            result.Should().NotBeNull();
+        }
     }
 }
