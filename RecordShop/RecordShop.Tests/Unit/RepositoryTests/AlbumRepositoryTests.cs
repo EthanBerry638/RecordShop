@@ -95,6 +95,15 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             result.Should().BeEquivalentTo(testAlbum);
         }
 
-        
+        [Test]
+        public async Task PostAlbumAsync_ShouldReturnDTO_WhenDTOIsValid()
+        {
+            var testAlbum = new PostAlbumRequestResponse("test", "test", 40);
+
+            var result = await _albumRepository.PostAlbumAsync(testAlbum);
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(testAlbum);
+        }
     }
 }

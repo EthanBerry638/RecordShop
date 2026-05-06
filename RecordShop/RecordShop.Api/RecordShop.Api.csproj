@@ -24,7 +24,6 @@
 	  <None Update="albums.json">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-    <Folder Include="Models\DTOs\" />
   </ItemGroup>
 
 </Project>
