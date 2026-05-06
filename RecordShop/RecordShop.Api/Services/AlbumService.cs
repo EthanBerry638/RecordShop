@@ -1,4 +1,5 @@
 ﻿using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
 
 namespace RecordShop.Api.Services
@@ -22,6 +23,13 @@ namespace RecordShop.Api.Services
             if (id <= 0) throw new ArgumentException();
 
             return await _albumRepository.GetAlbumByIdAsync(id);
+        }
+
+        public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
+        {
+            var placeholder = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
+
+            return placeholder;
         }
     }
 }
