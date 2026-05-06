@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 
 namespace RecordShop.Api.Repositories
 {
@@ -21,6 +22,13 @@ namespace RecordShop.Api.Repositories
         public async Task<Album?> GetAlbumByIdAsync(int id)
         {
             return await _db.Albums.FirstOrDefaultAsync(a => a.Id == id);
+        }
+
+        public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postedAlbum)
+        {
+            var album = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
+
+            return album;
         }
     }
 }

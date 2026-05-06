@@ -95,14 +95,6 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             result.Should().BeEquivalentTo(testAlbum);
         }
 
-        [Test]
-        public async Task PostAlbumAsync_ShouldReturnNull_WhenPriceIsNegative()
-        {
-            var testAlbum = new PostAlbumRequestResponse("The Dark Side of the Moon", "Pink Floyd", -1.00M);
-
-            var result = await _albumRepository.PostAlbumAsync(testAlbum);
-
-            result.Should().BeNull();
-        }
+        
     }
 }

@@ -1,4 +1,5 @@
 ﻿using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 
 namespace RecordShop.Api.Repositories
 {
@@ -6,5 +7,6 @@ namespace RecordShop.Api.Repositories
     {
         Task<List<Album>> GetAllAlbumsAsync();
         Task<Album?> GetAlbumByIdAsync(int id);
+        Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postedAlbum);
     }
 }
