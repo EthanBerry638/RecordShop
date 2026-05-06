@@ -32,9 +32,9 @@ namespace RecordShop.Api.Repositories
             return postedAlbum;
         }
 
-        public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
+        public async Task<Album> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
-            var response = new PutAlbumResponse(0, "placeholder", "placeholder", 4M);
+            var response = new Album { Id = 0, Title = "placeholder", Artist = "placeholder", Price = 4M };
 
             return response;
         }
