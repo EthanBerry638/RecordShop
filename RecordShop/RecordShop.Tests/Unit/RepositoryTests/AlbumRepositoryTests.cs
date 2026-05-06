@@ -5,6 +5,7 @@ using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
 using System.Text.Json;
+using RecordShop.Api.Models.DTOs;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
@@ -92,6 +93,16 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             result.Should().BeOfType<Album>();
             result.Should().BeEquivalentTo(testAlbum);
+        }
+
+        [Test]
+        public async Task PostAlbumAsync_ShouldReturnNull_WhenPriceIsNegative()
+        {
+            var testAlbum = new PostAlbumRequestResponse("The Dark Side of the Moon", "Pink Floyd", -1.00M);
+
+            var result = await _albumRepository.PostAlbumAsync(testAlbum);
+
+            result.Should().BeNull();
         }
     }
 }
