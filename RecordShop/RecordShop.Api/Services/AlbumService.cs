@@ -61,7 +61,7 @@ namespace RecordShop.Api.Services
 
             if (albumToDelete == null) return false;
 
-            return true;
+            return await _albumRepository.DeleteAlbumByIdAync(id);
         }
     }
 }
