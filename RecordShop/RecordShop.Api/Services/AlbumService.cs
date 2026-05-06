@@ -26,7 +26,7 @@ namespace RecordShop.Api.Services
             return await _albumRepository.GetAlbumByIdAsync(id);
         }
 
-        public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
+        public async Task<PostAlbumRequestResponse> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
         {
             if (postAlbumDTO.Price < 0 || postAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
 
