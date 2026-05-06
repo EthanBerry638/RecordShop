@@ -273,13 +273,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
             int id = 1;
 
             var testDTO = new PutAlbumRequest(longTitle, longArtist, 4M);
+            var existingAlbum = new Album { Id = id, Title = "Old Title", Artist = "Old Artist", Price = 2M };
+            var updatedAlbum = new Album { Id = id, Title = longTitle, Artist = longArtist, Price = 4M };
 
-            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(testDTO, id)).ReturnsAsync(It.IsAny<Album>());
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
+
+            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>(), id)).ReturnsAsync(updatedAlbum);
 
             var result = await _albumService.PutAlbumAsync(testDTO, id);
 
-            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(testDTO, id), Times.Once());
-            result.Should().BeEquivalentTo(testDTO);
+            result.Should().NotBeNull();
+            result.Title.Length.Should().Be(255);
+
+            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>(), id), Times.Once());
         }
     }
 }
