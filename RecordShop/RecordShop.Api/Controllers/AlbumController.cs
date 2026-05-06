@@ -48,7 +48,7 @@ namespace RecordShop.Api.Controllers
             );
         }
 
-        [HttpPut("replace")]
+        [HttpPut("replace/{id}")]
         public async Task<IActionResult> PutAlbumAsync(PutAlbumRequest requestDTO, int id)
         {
             var putAlbum = await _albumService.PutAlbumAsync(requestDTO, id);

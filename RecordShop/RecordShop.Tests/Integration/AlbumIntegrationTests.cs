@@ -194,5 +194,31 @@ namespace RecordShop.Tests.Integration
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
+
+        [Test]
+        public async Task PutAlbumAsyncEndpoint_ReturnsCreatedAtAction()
+        {
+            var client = _factory.CreateClient();
+            int id = 3;
+            var requestDTO = new PutAlbumRequest("Test", "Test", 6);
+            var expectedResponseDTO = new PutAlbumResponse(id, "Test", "Test", 6);
+
+            var response = await client.PutAsJsonAsync($"api/Album/replace/{id}", requestDTO);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+            response.Headers.Location.Should().NotBeNull();
+            response.Headers.Location.PathAndQuery.Should().Contain($"api/Album/{expectedResponseDTO.Id}");
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            album.Should().NotBeNull();
+            album.Should().BeEquivalentTo(expectedResponseDTO);
+        }
     }
 }
