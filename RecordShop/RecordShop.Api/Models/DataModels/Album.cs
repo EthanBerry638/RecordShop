@@ -16,7 +16,7 @@ namespace RecordShop.Api.Models.DataModels
         public string Artist { get; set; } = string.Empty;
 
         [Required(ErrorMessage = "Price is required")]
-        [Range(1, 2000000, ErrorMessage = "Price must be between 1 and 2,000,000")]
+        [Range(0.01, 2000000, ErrorMessage = "Price must be between 0.01 and 2,000,000")]
         public decimal Price { get; set; }
     }
 }
