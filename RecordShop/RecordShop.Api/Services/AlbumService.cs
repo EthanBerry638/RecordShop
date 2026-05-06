@@ -28,7 +28,7 @@ namespace RecordShop.Api.Services
 
         public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
         {
-            if (postAlbumDTO.Price < 0) throw new InvalidPriceException();
+            if (postAlbumDTO.Price < 0 || postAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
 
             if (string.IsNullOrWhiteSpace(postAlbumDTO.Title) || string.IsNullOrWhiteSpace(postAlbumDTO.Artist)) throw new EmptyStringException();
 
