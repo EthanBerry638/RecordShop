@@ -105,5 +105,28 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             result.Id.Should().NotBe(0);
             result.Should().NotBeNull();
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldReturnAlbum_WhenAlbumIsValid()
+        {
+            var originalAlbum = new Album { Title = "Title", Artist = "Artist", Price = 9.99M };
+
+            var seededAlbum = await _albumRepository.PostAlbumAsync(originalAlbum);
+            var id = seededAlbum.Id;
+
+            seededAlbum.Title = "Updated Title";
+            seededAlbum.Artist = "Updated Artist";
+            seededAlbum.Price = 12.99M;
+
+            var result = await _albumRepository.PutAlbumAsync(seededAlbum);
+
+            result.Should().NotBeNull();
+            result.Title.Should().Be("Updated Title");
+            result.Artist.Should().Be("Updated Artist");
+            result.Price.Should().Be(12.99M);
+
+            var inDb = await _albumRepository.GetAlbumByIdAsync(id);
+            inDb!.Title.Should().Be("Updated Title");
+        }
     }
 }

@@ -34,9 +34,7 @@ namespace RecordShop.Api.Repositories
 
         public async Task<Album> PutAlbumAsync(Album albumReplacement)
         {
-            var response = new Album { Id = 0, Title = "placeholder", Artist = "placeholder", Price = 4M };
-
-            return response;
+            return null;
         }
     }
 }
