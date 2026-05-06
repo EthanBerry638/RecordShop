@@ -31,5 +31,12 @@ namespace RecordShop.Api.Repositories
 
             return postedAlbum;
         }
+
+        public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
+        {
+            var response = new PutAlbumResponse(0, "placeholder", "placeholder", 4M);
+
+            return response;
+        }
     }
 }

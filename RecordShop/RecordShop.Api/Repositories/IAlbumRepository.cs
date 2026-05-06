@@ -8,5 +8,6 @@ namespace RecordShop.Api.Repositories
         Task<List<Album>> GetAllAlbumsAsync();
         Task<Album?> GetAlbumByIdAsync(int id);
         Task<Album> PostAlbumAsync(Album postedAlbum);
+        Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id);
     }
 }

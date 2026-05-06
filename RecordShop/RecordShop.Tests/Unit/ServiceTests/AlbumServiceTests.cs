@@ -264,5 +264,22 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<LongStringException>();
         }
+
+        [Test]
+        public async Task PostAlbumAsync_ShouldNotThrowException_WhenStringsLessThanOrEqual255Chars()
+        {
+            string longTitle = new string('a', 255);
+            string longArtist = new string('a', 255);
+
+            var testDTO = new PostAlbumRequest(longTitle, longArtist, 4M);
+            var testAlbum = new Album { Title = longTitle, Artist = longArtist, Price = 4M };
+
+            _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
+
+            var result = await _albumService.PostAlbumAsync(testDTO);
+
+            _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
+            result.Should().BeEquivalentTo(testDTO);
+        }
     }
 }
