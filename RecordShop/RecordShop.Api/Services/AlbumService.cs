@@ -73,7 +73,7 @@ namespace RecordShop.Api.Services
             albumToUpdate.Artist = artist;
             albumToUpdate.Price = putAlbumDTO.Price;
 
-            var putResult = await _albumRepository.PutAlbumAsync(albumToUpdate, id);
+            var putResult = await _albumRepository.PutAlbumAsync(albumToUpdate);
 
             return new PutAlbumResponse(putResult.Id, putResult.Title, putResult.Artist, putResult.Price);
         }

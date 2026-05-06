@@ -278,14 +278,14 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
 
-            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>(), id)).ReturnsAsync(updatedAlbum);
+            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>())).ReturnsAsync(updatedAlbum);
 
             var result = await _albumService.PutAlbumAsync(testDTO, id);
 
             result.Should().NotBeNull();
             result.Title.Length.Should().Be(255);
 
-            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>(), id), Times.Once());
+            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>()), Times.Once());
         }
 
         [Test]
@@ -299,14 +299,14 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
 
-            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>(), id)).ReturnsAsync(updatedAlbum);
+            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>())).ReturnsAsync(updatedAlbum);
 
             var result = await _albumService.PutAlbumAsync(testDTO, id);
 
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(updatedAlbum);
 
-            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>(), id), Times.Once());
+            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>()), Times.Once());
         }
 
         [Test]
@@ -318,13 +318,13 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
 
-            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>(), id)).ReturnsAsync(existingAlbum);
+            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>())).ReturnsAsync(existingAlbum);
 
             await _albumService.PutAlbumAsync(testDTO, id);
 
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.Is<Album>(album =>
                 album.Title == "Trimmed Title" &&
-                album.Artist == "Artist"), id), Times.Once);
+                album.Artist == "Artist")), Times.Once);
         }
 
         [Test]
