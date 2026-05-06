@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RecordShop.Api.Controllers;
 using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Services;
 
 namespace RecordShop.Tests.Unit.ControllerTests
@@ -106,6 +107,18 @@ namespace RecordShop.Tests.Unit.ControllerTests
             await _albumController.GetAlbumByIdAsync(1);
 
             _albumServiceMock.Verify(a => a.GetAlbumByIdAsync(1), Times.Once());
+        }
+
+        [Test]
+        public async Task PostAlbumAsync_ShouldReturnCreated_WhenServiceReturnsDTO()
+        {
+            var testDTO = new PostAlbumRequestResponse("Test", "Test", 4M);
+
+            _albumServiceMock.Setup(a => a.PostAlbumAsync(testDTO)).ReturnsAsync(testDTO);
+
+            var result = await _albumController.PostAlbumAsync(testDTO);
+
+            var notFoundResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
         }
     }
 }
