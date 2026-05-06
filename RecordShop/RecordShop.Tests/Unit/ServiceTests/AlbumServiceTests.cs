@@ -161,6 +161,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var deletedAlbum = new Album { Id = id, Title = "Deleted", Artist = "Delted", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
+            _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(true);
 
             var result = await _albumService.DeleteAlbumByIdAync(id);
 
