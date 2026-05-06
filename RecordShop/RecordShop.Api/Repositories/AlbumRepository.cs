@@ -38,5 +38,10 @@ namespace RecordShop.Api.Repositories
 
             return albumReplacement;
         }
+
+        public async Task<bool> DeleteAlbumByIdAync(int id)
+        {
+            return false;
+        }
     }
 }

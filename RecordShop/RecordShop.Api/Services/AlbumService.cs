@@ -54,5 +54,10 @@ namespace RecordShop.Api.Services
 
             return new PutAlbumResponse(putResult.Id, putResult.Title, putResult.Artist, putResult.Price);
         }
+
+        public async Task<bool> DeleteAlbumByIdAync(int id)
+        {
+            return false;
+        }
     }
 }
