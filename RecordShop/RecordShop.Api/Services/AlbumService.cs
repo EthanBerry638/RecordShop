@@ -28,7 +28,7 @@ namespace RecordShop.Api.Services
 
         public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
         {
-            throw new InvalidPriceException();
+            if (postAlbumDTO.Price < 0) throw new InvalidPriceException();
 
             var placeholder = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
 
