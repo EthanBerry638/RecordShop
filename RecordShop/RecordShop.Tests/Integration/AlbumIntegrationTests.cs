@@ -5,8 +5,10 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace RecordShop.Tests.Integration
@@ -155,6 +157,28 @@ namespace RecordShop.Tests.Integration
             var content = await response.Content.ReadAsStringAsync();
 
             content.Should().Contain("Please enter a number greater than 0");
+        }
+
+        [Test]
+        public async Task PostAlbumAsyncEndpoint_ReturnsCreatedAtAction()
+        {
+            var client = _factory.CreateClient();
+            var requestDTO = new PostAlbumRequest("Test", "Test", 6);
+            var expectedResponseDTO = new PostAlbumResponse(7, "Test", "Test", 6);
+
+            var response = await client.PostAsJsonAsync("api/Album/add", requestDTO);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            album.Should().NotBeNull();
+            album.Should().BeEquivalentTo(expectedResponseDTO);
         }
     }
 }

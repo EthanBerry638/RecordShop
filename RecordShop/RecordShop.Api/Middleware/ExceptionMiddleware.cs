@@ -47,7 +47,7 @@ namespace RecordShop.Api.Middleware
         private async Task HandleInvalidPriceException(Exception ex, HttpContext context)
         {
             context.Response.StatusCode = StatusCodes.Status400BadRequest;
-            await context.Response.WriteAsJsonAsync(new { message = "Please enter a price greater than or equal to0 and lower than 2 million" });
+            await context.Response.WriteAsJsonAsync(new { message = "Please enter a price greater than or equal to 0 and lower than 2 million" });
         }
 
         private async Task HandleEmptyStringException(Exception ex, HttpContext context)
