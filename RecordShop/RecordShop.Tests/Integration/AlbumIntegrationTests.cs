@@ -232,5 +232,17 @@ namespace RecordShop.Tests.Integration
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
+
+        [Test]
+        public async Task PutAlbumAsyncEndpoint_ReturnsNotFoundWithIdThatDoesNotExist()
+        {
+            var client = _factory.CreateClient();
+            int id = 10000000;
+            var requestDTO = new PutAlbumRequest("Test", "Test", 3);
+
+            var response = await client.PutAsJsonAsync($"api/Album/replace/{id}", requestDTO);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
     }
 }
