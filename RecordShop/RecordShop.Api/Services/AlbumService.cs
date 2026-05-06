@@ -49,6 +49,8 @@ namespace RecordShop.Api.Services
             return new PostAlbumResponse(postResult.Id, postResult.Title, postResult.Artist, postResult.Price);
         }
 
+        // TODO: Refactor. Not DRY
+
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
             var title = putAlbumDTO.Title?.Trim();
