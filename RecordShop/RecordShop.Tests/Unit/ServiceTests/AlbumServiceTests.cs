@@ -139,5 +139,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>()), Times.Once());
         }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsync_ShouldNotThrowAnExceptionAndReturnFalse_WhenGetByIdReturnsNull()
+        {
+            int id = 1;
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync((Album)null!);
+
+            var result = await _albumService.DeleteAlbumByIdAync(id);
+
+            result.Should().BeFalse();
+
+            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
+        }
     }
 }
