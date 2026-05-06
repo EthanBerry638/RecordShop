@@ -170,5 +170,22 @@ namespace RecordShop.Tests.Unit.ServiceTests
             _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
             _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
         }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsync_ShouldReturnFalse_WhenGetByIdReturnsAnAlbumButRepositoryReturnsFalse()
+        {
+            int id = 1;
+            var deletedAlbum = new Album { Id = id, Title = "Deleted", Artist = "Delted", Price = 4M };
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
+            _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(false);
+
+            var result = await _albumService.DeleteAlbumByIdAync(id);
+
+            result.Should().BeFalse();
+
+            _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
+            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
+        }
     }
 }
