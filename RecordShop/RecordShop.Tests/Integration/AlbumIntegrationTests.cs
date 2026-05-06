@@ -230,5 +230,27 @@ namespace RecordShop.Tests.Integration
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsyncEndpoint_ReturnsNotFoundWithIdThatDoesNotExist()
+        {
+            var client = _factory.CreateClient();
+            int id = 1000000;
+
+            var response = await client.DeleteAsync($"api/Album/{id}");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsyncEndpoint_ReturnsNoContentWithIdThatDidExist()
+        {
+            var client = _factory.CreateClient();
+            int id = 4;
+
+            var response = await client.DeleteAsync($"api/Album/{id}");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NoContent);
+        }
     }
 }
