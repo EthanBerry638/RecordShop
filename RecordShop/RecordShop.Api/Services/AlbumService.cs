@@ -1,6 +1,7 @@
 ﻿using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
+using RecordShop.Api.CustomExceptions;
 
 namespace RecordShop.Api.Services
 {
@@ -27,6 +28,8 @@ namespace RecordShop.Api.Services
 
         public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
         {
+            throw new InvalidPriceException();
+
             var placeholder = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
 
             return placeholder;
