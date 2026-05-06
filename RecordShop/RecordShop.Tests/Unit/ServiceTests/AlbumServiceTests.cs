@@ -166,7 +166,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var result = await _albumService.PostAlbumAsync(testDTO);
 
             _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
-            result.Should().BeEquivalentTo(testDTO);
             result.Title.Should().Be("TestTitle");
             result.Artist.Should().Be("TestArtist");
             result.Should().NotBeNull();

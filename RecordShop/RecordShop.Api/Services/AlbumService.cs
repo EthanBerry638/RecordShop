@@ -28,20 +28,23 @@ namespace RecordShop.Api.Services
 
         public async Task<PostAlbumRequestResponse> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
         {
+            var title = postAlbumDTO.Title?.Trim();
+            var artist = postAlbumDTO.Artist?.Trim();
+
             if (postAlbumDTO.Price < 0 || postAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
 
             if (string.IsNullOrWhiteSpace(postAlbumDTO.Title) || string.IsNullOrWhiteSpace(postAlbumDTO.Artist)) throw new EmptyStringException();
 
             var postedAlbum = new Album
             {
-                Title = postAlbumDTO.Title,
-                Artist = postAlbumDTO.Artist,
+                Title = title!,
+                Artist = artist!,
                 Price = postAlbumDTO.Price
             };
 
             var postResult = await _albumRepository.PostAlbumAsync(postedAlbum);
 
-            var responseDTO = new PostAlbumRequestResponse(postAlbumDTO.Title, postAlbumDTO.Artist, postResult.Price);
+            var responseDTO = new PostAlbumRequestResponse(postResult.Title, postResult.Artist, postResult.Price);
 
             return responseDTO;
         }
