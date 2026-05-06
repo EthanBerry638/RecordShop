@@ -30,6 +30,8 @@ namespace RecordShop.Api.Services
         {
             if (postAlbumDTO.Price < 0) throw new InvalidPriceException();
 
+            if (string.IsNullOrWhiteSpace(postAlbumDTO.Title) || string.IsNullOrWhiteSpace(postAlbumDTO.Artist)) throw new EmptyStringException();
+
             var placeholder = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
 
             return placeholder;
