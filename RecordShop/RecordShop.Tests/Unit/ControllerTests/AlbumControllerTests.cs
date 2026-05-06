@@ -109,16 +109,18 @@ namespace RecordShop.Tests.Unit.ControllerTests
             _albumServiceMock.Verify(a => a.GetAlbumByIdAsync(1), Times.Once());
         }
 
-        //[Test]
-        //public async Task PostAlbumAsync_ShouldReturnCreated_WhenServiceReturnsDTO()
-        //{
-        //    var testDTO = new PostAlbumRequest("Test", "Test", 4M);
+        [Test]
+        public async Task PostAlbumAsync_ShouldReturnCreated_WhenServiceReturnsDTO()
+        {
+            var testRequest = new PostAlbumRequest("Test", "Test", 4M);
+            var testResponse = new PostAlbumResponse(1, "Test", "Test", 4M); 
 
-        //    _albumServiceMock.Setup(a => a.PostAlbumAsync(testDTO)).ReturnsAsync(testDTO);
+            _albumServiceMock.Setup(a => a.PostAlbumAsync(testRequest)).ReturnsAsync(testResponse);
 
-        //    var result = await _albumController.PostAlbumAsync(testDTO);
+            var result = await _albumController.PostAlbumAsync(testRequest);
 
-        //    var notFoundResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
-        //}
+            var createdResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
+            createdResult.RouteValues!["id"].Should().Be(1);
+        }
     }
 }
