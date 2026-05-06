@@ -51,9 +51,12 @@ namespace RecordShop.Api.Services
 
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
+            var title = putAlbumDTO.Title?.Trim();
+            var artist = putAlbumDTO.Artist?.Trim();
+
             if (putAlbumDTO.Price < 0 || putAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
 
-            if (putAlbumDTO.Title.Length > 255 || putAlbumDTO.Artist.Length > 255) throw new LongStringException();
+            if (title!.Length > 255 || artist!.Length > 255) throw new LongStringException();
 
             var albumToUpdate = await GetAlbumByIdAsync(id);
 
@@ -62,8 +65,8 @@ namespace RecordShop.Api.Services
                 return null;
             }
 
-            albumToUpdate.Title = putAlbumDTO.Title;
-            albumToUpdate.Artist = putAlbumDTO.Artist;
+            albumToUpdate.Title = title;
+            albumToUpdate.Artist = artist;
             albumToUpdate.Price = putAlbumDTO.Price;
 
             var putResult = await _albumRepository.PutAlbumAsync(albumToUpdate, id);
