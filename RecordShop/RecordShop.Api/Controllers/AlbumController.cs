@@ -41,7 +41,11 @@ namespace RecordShop.Api.Controllers
         {
             var postedAlbum = await _albumService.PostAlbumAsync(requestDTO);
 
-            return Created();
+            return CreatedAtAction(
+                nameof(GetAlbumByIdAsync),
+                new { Id = postedAlbum.Id },
+                postedAlbum
+            );
         }
     }
 }
