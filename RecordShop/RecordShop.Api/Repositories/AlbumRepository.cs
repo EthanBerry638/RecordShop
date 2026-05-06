@@ -34,7 +34,11 @@ namespace RecordShop.Api.Repositories
 
         public async Task<Album> PutAlbumAsync(Album albumReplacement)
         {
-            return null;
+            _db.Albums.Update(albumReplacement);
+
+            await _db.SaveChangesAsync();
+
+            return albumReplacement;
         }
     }
 }
