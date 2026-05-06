@@ -37,7 +37,7 @@ namespace RecordShop.Api.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> PostAlbumAsync(PostAlbumRequest requestDTO)
+        public async Task<IActionResult> PostAlbumAsync([FromBody] PostAlbumRequest requestDTO)
         {
             var postedAlbum = await _albumService.PostAlbumAsync(requestDTO);
 
@@ -49,7 +49,7 @@ namespace RecordShop.Api.Controllers
         }
 
         [HttpPut("replace/{id:min(1)}")]
-        public async Task<IActionResult> PutAlbumAsync(PutAlbumRequest requestDTO, int id)
+        public async Task<IActionResult> PutAlbumAsync([FromBody] PutAlbumRequest requestDTO, int id)
         {
             var putAlbum = await _albumService.PutAlbumAsync(requestDTO, id);
 
