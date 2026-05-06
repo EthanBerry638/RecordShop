@@ -225,5 +225,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             result.Should().BeNull();
         }
+
+        [Test]
+        [TestCase(2000000)]
+        [TestCase(2000000000)]
+        [TestCase(2000001)]
+        public async Task PutAlbumAsync_ShouldThrowException_WhenPriceIsTooHigh(decimal price)
+        {
+            int id = 1;
+            var testDTO = new PutAlbumRequest("Test", "Test", price);
+
+            var act = async () => await _albumService.PutAlbumAsync(testDTO, id);
+
+            await act.Should().ThrowAsync<InvalidPriceException>();
+        }
     }
 }
