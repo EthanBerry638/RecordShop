@@ -326,5 +326,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
                 album.Title == "Trimmed Title" &&
                 album.Artist == "Artist"), id), Times.Once);
         }
+
+        [Test]
+        [TestCase(null, null)]
+        [TestCase("", "")]
+        [TestCase("              ", "              ")]
+        public async Task PutAlbumAsync_ShouldThrowException_WhenTitleOrAuthorIsNullOrEmpty(string? title, string? author)
+        {
+            int id = 1;
+            var testDTO = new PutAlbumRequest(title!, author!, 2);
+
+            var act = () => _albumService.PutAlbumAsync(testDTO, id);
+
+            await act.Should().ThrowAsync<EmptyStringException>();
+        }
     }
 }
