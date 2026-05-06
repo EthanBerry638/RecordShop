@@ -180,5 +180,16 @@ namespace RecordShop.Tests.Integration
             album.Should().NotBeNull();
             album.Should().BeEquivalentTo(expectedResponseDTO);
         }
+
+        [Test]
+        public async Task PostAlbumAsyncEndpoint_ReturnsBadRequestWithNegativePrice()
+        {
+            var client = _factory.CreateClient();
+            var requestDTO = new PostAlbumRequest("Test", "Test", -1);
+
+            var response = await client.PostAsJsonAsync("api/Album/add", requestDTO);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
+        }
     }
 }
