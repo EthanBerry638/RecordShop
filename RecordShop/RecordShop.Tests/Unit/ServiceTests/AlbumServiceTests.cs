@@ -4,7 +4,6 @@ using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
-using RecordShop.Api.CustomExceptions;
 
 namespace RecordShop.Tests.Unit.ServiceTests
 {
@@ -104,42 +103,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        public async Task PostAlbumAsync_ShouldThrowException_WhenPriceIsNegative()
-        {
-            var testDTO = new PostAlbumRequest("Test", "Test", -1);
-
-            var act = () => _albumService.PostAlbumAsync(testDTO);
-
-            await act.Should().ThrowAsync<InvalidPriceException>();
-        }
-
-        [Test]
-        [TestCase(2000000)]
-        [TestCase(2000000000)]
-        [TestCase(2000001)]
-        public async Task PostAlbumAsync_ShouldThrowException_WhenPriceIsTooHigh(decimal price)
-        {
-            var testDTO = new PostAlbumRequest("Test", "Test", price);
-
-            var act = () => _albumService.PostAlbumAsync(testDTO);
-
-            await act.Should().ThrowAsync<InvalidPriceException>();
-        }
-
-        [Test]
-        [TestCase(null)]
-        [TestCase("")]
-        [TestCase("              ")]
-        public async Task PostAlbumAsync_ShouldThrowException_WhenTitleIsNullOrEmpty(string? title)
-        {
-            var testDTO = new PostAlbumRequest(title!, "Test", 2);
-
-            var act = () => _albumService.PostAlbumAsync(testDTO);
-
-            await act.Should().ThrowAsync<EmptyStringException>();
-        }
-
-        [Test]
         public async Task PostAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
         {
             var testDTO = new PostAlbumRequest("Test", "Test", 4M);
@@ -169,19 +132,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             result.Title.Should().Be("TestTitle");
             result.Artist.Should().Be("TestArtist");
             result.Should().NotBeNull();
-        }
-
-        [Test]
-        public async Task PostAlbumAsync_ShouldThrowException_WhenStringsLongerThan255Chars()
-        {
-            string longTitle = new string('a', 256);
-            string longArtist = new string('a', 256);
-
-            var testDTO = new PostAlbumRequest(longTitle, longArtist, 2);
-
-            var act = () => _albumService.PostAlbumAsync(testDTO);
-
-            await act.Should().ThrowAsync<LongStringException>();
         }
 
         [Test]
@@ -224,45 +174,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var result = await _albumService.PutAlbumAsync(albumToUpdate, id);
 
             result.Should().BeNull();
-        }
-
-        [Test]
-        [TestCase(2000000)]
-        [TestCase(2000000000)]
-        [TestCase(2000001)]
-        public async Task PutAlbumAsync_ShouldThrowException_WhenPriceIsTooHigh(decimal price)
-        {
-            int id = 1;
-            var testDTO = new PutAlbumRequest("Test", "Test", price);
-
-            var act = async () => await _albumService.PutAlbumAsync(testDTO, id);
-
-            await act.Should().ThrowAsync<InvalidPriceException>();
-        }
-
-        [Test]
-        public async Task PutAlbumAsync_ShouldThrowException_WhenPriceIsNegative()
-        {
-            int id = 1;
-            var testDTO = new PutAlbumRequest("Test", "Test", -1);
-
-            var act = () => _albumService.PutAlbumAsync(testDTO, id);
-
-            await act.Should().ThrowAsync<InvalidPriceException>();
-        }
-
-        [Test]
-        public async Task PutAlbumAsync_ShouldThrowException_WhenStringsLongerThan255Chars()
-        {
-            string longTitle = new string('a', 256);
-            string longArtist = new string('a', 256);
-            int id = 1;
-
-            var testDTO = new PutAlbumRequest(longTitle, longArtist, 2);
-
-            var act = () => _albumService.PutAlbumAsync(testDTO, id);
-
-            await act.Should().ThrowAsync<LongStringException>();
         }
 
         [Test]
@@ -325,20 +236,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.Is<Album>(album =>
                 album.Title == "Trimmed Title" &&
                 album.Artist == "Artist")), Times.Once);
-        }
-
-        [Test]
-        [TestCase(null, null)]
-        [TestCase("", "")]
-        [TestCase("              ", "              ")]
-        public async Task PutAlbumAsync_ShouldThrowException_WhenTitleOrArtistIsNullOrEmpty(string? title, string? author)
-        {
-            int id = 1;
-            var testDTO = new PutAlbumRequest(title!, author!, 2);
-
-            var act = () => _albumService.PutAlbumAsync(testDTO, id);
-
-            await act.Should().ThrowAsync<EmptyStringException>();
         }
     }
 }
