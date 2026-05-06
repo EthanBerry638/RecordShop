@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
 using Moq;
 using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
 using RecordShop.Api.Services;
+using RecordShop.Api.CustomExceptions;
 
 namespace RecordShop.Tests.Unit.ServiceTests
 {
@@ -99,6 +101,16 @@ namespace RecordShop.Tests.Unit.ServiceTests
             result.Should().NotBeNull();
             result.Should().BeEquivalentTo(testAlbum);
             result.Title.Should().Be("Test Title1");
+        }
+
+        [Test]
+        public async Task PostAlbumAsync_ShouldThrowException_WhenPriceIsNegative()
+        {
+            var testDTO = new PostAlbumRequestResponse("Test", "Test", -1);
+
+            var act = () => _albumService.PostAlbumAsync(testDTO);
+
+            await act.Should().ThrowAsync<InvalidPriceException>();
         }
     }
 }
