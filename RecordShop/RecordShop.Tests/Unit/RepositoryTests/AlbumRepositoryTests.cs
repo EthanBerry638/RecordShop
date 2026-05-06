@@ -128,5 +128,18 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             var inDb = await _albumRepository.GetAlbumByIdAsync(id);
             inDb!.Title.Should().Be("Updated Title");
         }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsync_ShouldReturnTrue_WhenAlbumIsDeleted()
+        {
+            int existingId = 1;
+
+            var result = await _albumRepository.DeleteAlbumByIdAync(existingId);
+
+            result.Should().BeTrue();
+
+            var deletedAlbum = await _context.Albums.FindAsync(existingId);
+            deletedAlbum.Should().BeNull();  
+        }
     }
 }
