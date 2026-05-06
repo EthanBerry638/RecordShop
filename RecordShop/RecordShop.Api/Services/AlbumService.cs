@@ -51,6 +51,8 @@ namespace RecordShop.Api.Services
 
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
+            if (putAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
+
             var albumToUpdate = await GetAlbumByIdAsync(id);
 
             return null!;
