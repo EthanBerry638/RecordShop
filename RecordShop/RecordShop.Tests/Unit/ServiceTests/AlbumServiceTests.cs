@@ -250,5 +250,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<InvalidPriceException>();
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldThrowException_WhenStringsLongerThan255Chars()
+        {
+            string longTitle = new string('a', 256);
+            string longArtist = new string('a', 256);
+            int id = 1;
+
+            var testDTO = new PutAlbumRequest(longTitle, longArtist, 2);
+
+            var act = () => _albumService.PutAlbumAsync(testDTO, id);
+
+            await act.Should().ThrowAsync<LongStringException>();
+        }
     }
 }
