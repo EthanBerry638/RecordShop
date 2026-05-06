@@ -201,6 +201,16 @@ namespace RecordShop.Tests.Unit.ServiceTests
             result.Should().BeEquivalentTo(testDTO);
         }
 
+        [Test]
+        [TestCase(0)]
+        [TestCase(-10)]
+        public async Task PutAlbumAsync_ShouldThrowException_WhenInvalidIdPassedIn(int id)
+        {
+            var albumToUpdate = new PutAlbumRequest ("Updated Title", "Updated Artist", 20);
 
+            Func<Task> act = async () => await _albumService.PutAlbumAsync(albumToUpdate, id);
+
+            await act.Should().ThrowAsync<ArgumentException>();
+        }
     }
 }

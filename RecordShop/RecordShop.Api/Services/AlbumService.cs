@@ -49,7 +49,7 @@ namespace RecordShop.Api.Services
             return new PostAlbumResponse(postResult.Id, postResult.Title, postResult.Artist, postResult.Price);
         }
 
-        public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumResponse putAlbumDTO, int id)
+        public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
             return new PutAlbumResponse(id, "placeholder", "placeholder", 2);
         }
