@@ -21,26 +21,15 @@ namespace RecordShop.Api.Services
 
         public async Task<Album?> GetAlbumByIdAsync(int id)
         {
-            if (id <= 0) throw new ArgumentException();
-
             return await _albumRepository.GetAlbumByIdAsync(id);
         }
 
         public async Task<PostAlbumResponse> PostAlbumAsync(PostAlbumRequest postAlbumDTO)
         {
-            var title = postAlbumDTO.Title?.Trim();
-            var artist = postAlbumDTO.Artist?.Trim();
-
-            if (postAlbumDTO.Price < 0 || postAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
-
-            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(artist)) throw new EmptyStringException();
-
-            if (title!.Length > 255 || artist!.Length > 255) throw new LongStringException();
-
             var postedAlbum = new Album
             {
-                Title = title!,
-                Artist = artist!,
+                Title = postAlbumDTO.Title,
+                Artist = postAlbumDTO.Artist,
                 Price = postAlbumDTO.Price
             };
 
@@ -49,19 +38,8 @@ namespace RecordShop.Api.Services
             return new PostAlbumResponse(postResult.Id, postResult.Title, postResult.Artist, postResult.Price);
         }
 
-        // TODO: Refactor. Not DRY
-
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
-            var title = putAlbumDTO.Title?.Trim();
-            var artist = putAlbumDTO.Artist?.Trim();
-
-            if (putAlbumDTO.Price < 0 || putAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
-
-            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(artist)) throw new EmptyStringException();
-
-            if (title!.Length > 255 || artist!.Length > 255) throw new LongStringException();
-
             var albumToUpdate = await GetAlbumByIdAsync(id);
 
             if (albumToUpdate == null)
@@ -69,8 +47,8 @@ namespace RecordShop.Api.Services
                 return null;
             }
 
-            albumToUpdate.Title = title;
-            albumToUpdate.Artist = artist;
+            albumToUpdate.Title = putAlbumDTO.Title;
+            albumToUpdate.Artist = putAlbumDTO.Artist;
             albumToUpdate.Price = putAlbumDTO.Price;
 
             var putResult = await _albumRepository.PutAlbumAsync(albumToUpdate);
