@@ -138,5 +138,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<EmptyStringException>();
         }
+
+        [Test]
+        public async Task PostAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
+        {
+            var testDTO = new PostAlbumRequestResponse("Test", "Test", 4M);
+            var testAlbum = new Album { Title = "Test", Artist = "Test", Price = 4M };
+
+            _albumRepositoryMock.Setup(a => a.PostAlbumAsync(testAlbum)).ReturnsAsync(testAlbum);
+
+            var result = await _albumService.PostAlbumAsync(testDTO);
+
+            _albumRepositoryMock.Verify(a => a.PostAlbumAsync(testAlbum), Times.Once());
+            result.Should().BeEquivalentTo(testDTO);
+        }
     }
 }
