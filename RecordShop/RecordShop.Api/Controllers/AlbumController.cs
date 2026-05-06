@@ -68,7 +68,14 @@ namespace RecordShop.Api.Controllers
         [HttpDelete("{id:min(1)}")]
         public async Task<IActionResult> DeleteAlbumByIdAsync(int id)
         {
-            return NotFound();
+            var deleteResult = await _albumService.DeleteAlbumByIdAync(id);
+
+            if (!deleteResult)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
         }
     }
 }
