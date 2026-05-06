@@ -32,9 +32,18 @@ namespace RecordShop.Api.Services
 
             if (string.IsNullOrWhiteSpace(postAlbumDTO.Title) || string.IsNullOrWhiteSpace(postAlbumDTO.Artist)) throw new EmptyStringException();
 
-            var placeholder = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
+            var postedAlbum = new Album
+            {
+                Title = postAlbumDTO.Title,
+                Artist = postAlbumDTO.Artist,
+                Price = postAlbumDTO.Price
+            };
 
-            return placeholder;
+            var postResult = await _albumRepository.PostAlbumAsync(postedAlbum);
+
+            var responseDTO = new PostAlbumRequestResponse(postAlbumDTO.Title, postAlbumDTO.Artist, postResult.Price);
+
+            return responseDTO;
         }
     }
 }
