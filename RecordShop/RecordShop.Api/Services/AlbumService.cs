@@ -33,7 +33,9 @@ namespace RecordShop.Api.Services
 
             if (postAlbumDTO.Price < 0 || postAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
 
-            if (string.IsNullOrWhiteSpace(postAlbumDTO.Title) || string.IsNullOrWhiteSpace(postAlbumDTO.Artist)) throw new EmptyStringException();
+            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(artist)) throw new EmptyStringException();
+
+            if (title!.Length > 255 || artist!.Length > 255) throw new LongStringException();
 
             var postedAlbum = new Album
             {
