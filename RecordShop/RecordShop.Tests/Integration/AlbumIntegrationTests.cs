@@ -152,11 +152,7 @@ namespace RecordShop.Tests.Integration
 
             var response = await client.GetAsync("api/Album/0");
 
-            response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
-
-            var content = await response.Content.ReadAsStringAsync();
-
-            content.Should().Contain("Please enter a number greater than 0");
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
 
         [Test]

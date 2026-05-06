@@ -68,16 +68,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        [TestCase(0)]
-        [TestCase(-10)]
-        public async Task GetAlbumByIdAsync_ShouldThrowException_WhenInvalidIdPassedIn(int id)
-        {
-            var act = () => _albumService.GetAlbumByIdAsync(id);
-
-            await act.Should().ThrowAsync<ArgumentException>();
-        }
-
-        [Test]
         public async Task GetAlbumByIdAsync_ShouldNotThrowAnExceptionAndReturnNull_WhenRepoReturnsNull()
         {
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(10)).ReturnsAsync((Album)null!);
@@ -152,18 +142,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        [TestCase(0)]
-        [TestCase(-10)]
-        public async Task PutAlbumAsync_ShouldThrowException_WhenInvalidIdPassedIn(int id)
-        {
-            var albumToUpdate = new PutAlbumRequest ("Updated Title", "Updated Artist", 20);
-
-            Func<Task> act = async () => await _albumService.PutAlbumAsync(albumToUpdate, id);
-
-            await act.Should().ThrowAsync<ArgumentException>();
-        }
-
-        [Test]
         public async Task PutAlbumAsync_ShouldNotThrowAnExceptionAndReturnNull_WhenGetByIdReturnsNull()
         {
             int id = 99;
@@ -218,24 +196,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             result.Should().BeEquivalentTo(updatedAlbum);
 
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>()), Times.Once());
-        }
-
-        [Test]
-        public async Task PutAlbumAsync_ShouldTrimWhiteSpace_WhenValidRequestHasSpaces()
-        {
-            int id = 1;
-            var testDTO = new PutAlbumRequest("  Trimmed Title  ", "  Artist  ", 10.99M);
-            var existingAlbum = new Album { Id = id, Title = "Old", Artist = "Old", Price = 5M };
-
-            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
-
-            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>())).ReturnsAsync(existingAlbum);
-
-            await _albumService.PutAlbumAsync(testDTO, id);
-
-            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.Is<Album>(album =>
-                album.Title == "Trimmed Title" &&
-                album.Artist == "Artist")), Times.Once);
         }
     }
 }

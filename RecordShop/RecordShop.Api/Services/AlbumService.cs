@@ -1,7 +1,6 @@
 ﻿using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
-using RecordShop.Api.CustomExceptions;
 
 namespace RecordShop.Api.Services
 {
