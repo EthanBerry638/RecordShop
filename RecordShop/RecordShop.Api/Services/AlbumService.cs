@@ -57,6 +57,11 @@ namespace RecordShop.Api.Services
 
             var albumToUpdate = await GetAlbumByIdAsync(id);
 
+            if (albumToUpdate == null)
+            {
+                return null;
+            }
+
             var replacementAlbum = new Album
             {
                 Title = putAlbumDTO.Title,
