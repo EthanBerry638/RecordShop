@@ -145,14 +145,11 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         [Test]
         public async Task DeleteAlbumByIdAsync_ShouldReturnFalse_WhenAlbumIsNotFound()
         {
-            int existingId = 1;
+            int existingId = 500000;
 
             var result = await _albumRepository.DeleteAlbumByIdAync(existingId);
 
             result.Should().BeFalse();
-
-            var deletedAlbum = await _context.Albums.FindAsync(existingId);
-            deletedAlbum.Should().NotBeNull();
         }
     }
 }
