@@ -200,5 +200,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
             _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
             result.Should().BeEquivalentTo(testDTO);
         }
+
+
     }
 }
