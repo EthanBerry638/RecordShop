@@ -170,6 +170,9 @@ namespace RecordShop.Tests.Integration
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
+            response.Headers.Location.Should().NotBeNull();
+            response.Headers.Location.PathAndQuery.Should().Contain($"api/Album/{expectedResponseDTO.Id}");
+
             var content = await response.Content.ReadAsStringAsync();
 
             var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
