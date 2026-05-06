@@ -7,15 +7,16 @@ namespace RecordShop.Api.Models.DataModels
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [MaxLength(150)]
+        [Required(ErrorMessage = "Title is required")]
+        [MaxLength(150, ErrorMessage = "Title cannot exceed 150 characters")]
         public string Title { get; set; } = string.Empty;
 
-        [Required]
-        [MaxLength(150)]
+        [Required(ErrorMessage = "Artist is required")]
+        [MaxLength(150, ErrorMessage = "Artist cannot exceed 150 characters")]
         public string Artist { get; set; } = string.Empty;
 
-        [Range(0, 2000000)]
+        [Required(ErrorMessage = "Price is required")]
+        [Range(1, 2000000, ErrorMessage = "Price must be between 1 and 2,000,000")]
         public decimal Price { get; set; }
     }
 }
