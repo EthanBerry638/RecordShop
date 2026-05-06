@@ -27,7 +27,10 @@ builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.SuppressAsyncSuffixInActionNames = false;
+});
 
 var app = builder.Build();
 
