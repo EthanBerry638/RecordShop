@@ -53,7 +53,7 @@ namespace RecordShop.Api.Services
         {
             var albumToUpdate = await GetAlbumByIdAsync(id);
 
-            return new PutAlbumResponse(id, "placeholder", "placeholder", 2);
+            return null!;
         }
     }
 }
