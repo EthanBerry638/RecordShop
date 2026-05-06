@@ -51,6 +51,8 @@ namespace RecordShop.Api.Services
 
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
+            var albumToUpdate = await GetAlbumByIdAsync(id);
+
             return new PutAlbumResponse(id, "placeholder", "placeholder", 2);
         }
     }
