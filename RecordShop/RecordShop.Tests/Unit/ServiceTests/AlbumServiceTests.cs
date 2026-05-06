@@ -308,5 +308,23 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>(), id), Times.Once());
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldTrimWhiteSpace_WhenValidRequestHasSpaces()
+        {
+            int id = 1;
+            var testDTO = new PutAlbumRequest("  Trimmed Title  ", "  Artist  ", 10.99M);
+            var existingAlbum = new Album { Id = id, Title = "Old", Artist = "Old", Price = 5M };
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
+
+            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>(), id)).ReturnsAsync(existingAlbum);
+
+            await _albumService.PutAlbumAsync(testDTO, id);
+
+            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.Is<Album>(album =>
+                album.Title == "Trimmed Title" &&
+                album.Artist == "Artist"), id), Times.Once);
+        }
     }
 }
