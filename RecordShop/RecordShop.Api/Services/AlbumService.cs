@@ -62,14 +62,11 @@ namespace RecordShop.Api.Services
                 return null;
             }
 
-            var replacementAlbum = new Album
-            {
-                Title = putAlbumDTO.Title,
-                Artist = putAlbumDTO.Artist,
-                Price = putAlbumDTO.Price
-            };
+            albumToUpdate.Title = putAlbumDTO.Title;
+            albumToUpdate.Artist = putAlbumDTO.Artist;
+            albumToUpdate.Price = putAlbumDTO.Price;
 
-            var putResult = await _albumRepository.PutAlbumAsync(replacementAlbum, id);
+            var putResult = await _albumRepository.PutAlbumAsync(albumToUpdate, id);
 
             return new PutAlbumResponse(putResult.Id, putResult.Title, putResult.Artist, putResult.Price);
         }
