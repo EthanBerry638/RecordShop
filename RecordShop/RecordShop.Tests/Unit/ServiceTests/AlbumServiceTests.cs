@@ -239,5 +239,16 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<InvalidPriceException>();
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldThrowException_WhenPriceIsNegative()
+        {
+            int id = 1;
+            var testDTO = new PutAlbumRequest("Test", "Test", -1);
+
+            var act = () => _albumService.PutAlbumAsync(testDTO, id);
+
+            await act.Should().ThrowAsync<InvalidPriceException>();
+        }
     }
 }
