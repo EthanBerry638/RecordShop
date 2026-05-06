@@ -162,5 +162,17 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             var notFoundResult = result.Should().BeOfType<NotFoundResult>().Subject;
         }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsync_ShouldReturnNoContent_WhenServiceReturnsTrue()
+        {
+            int id = 1;
+
+            _albumServiceMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(true);
+
+            var result = await _albumController.DeleteAlbumByIdAsync(id);
+
+            var notFoundResult = result.Should().BeOfType<NoContentResult>().Subject;
+        }
     }
 }
