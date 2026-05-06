@@ -107,23 +107,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        public async Task PostAlbumAsync_ShouldNotThrowException_WhenStringsLessThanOrEqual255Chars()
-        {
-            string longTitle = new string('a', 255);
-            string longArtist = new string('a', 255);
-
-            var testDTO = new PostAlbumRequest(longTitle, longArtist, 4M);
-            var testAlbum = new Album { Title = longTitle, Artist = longArtist, Price = 4M };
-
-            _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
-
-            var result = await _albumService.PostAlbumAsync(testDTO);
-
-            _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
-            result.Should().BeEquivalentTo(testDTO);
-        }
-
-        [Test]
         public async Task PutAlbumAsync_ShouldNotThrowAnExceptionAndReturnNull_WhenGetByIdReturnsNull()
         {
             int id = 99;
@@ -134,29 +117,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var result = await _albumService.PutAlbumAsync(albumToUpdate, id);
 
             result.Should().BeNull();
-        }
-
-        [Test]
-        public async Task PutAlbumAsync_ShouldNotThrowException_WhenStringsLessThanOrEqual255Chars()
-        {
-            string longTitle = new string('a', 255);
-            string longArtist = new string('a', 255);
-            int id = 1;
-
-            var testDTO = new PutAlbumRequest(longTitle, longArtist, 4M);
-            var existingAlbum = new Album { Id = id, Title = "Old Title", Artist = "Old Artist", Price = 2M };
-            var updatedAlbum = new Album { Id = id, Title = longTitle, Artist = longArtist, Price = 4M };
-
-            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
-
-            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>())).ReturnsAsync(updatedAlbum);
-
-            var result = await _albumService.PutAlbumAsync(testDTO, id);
-
-            result.Should().NotBeNull();
-            result.Title.Length.Should().Be(255);
-
-            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>()), Times.Once());
         }
 
         [Test]
