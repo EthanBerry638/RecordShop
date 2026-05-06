@@ -138,17 +138,7 @@ namespace RecordShop.Tests.Integration
         [Test]
         public async Task GetAlbumByIdAsyncEndpoint_ReturnsCorrectMessageFromMiddlewareWhenUserMakesBadRequest()
         {
-            var client = _factory.WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureTestServices(services =>
-                {
-                    var mockService = new Mock<IAlbumService>();
-
-                    mockService.Setup(s => s.GetAlbumByIdAsync(0)).ThrowsAsync(new ArgumentException());
-
-                    services.AddScoped(_ => mockService.Object);
-                });
-            }).CreateClient();
+            var client = _factory.CreateClient();
 
             var response = await client.GetAsync("api/Album/0");
 
@@ -162,7 +152,7 @@ namespace RecordShop.Tests.Integration
             var requestDTO = new PostAlbumRequest("Test", "Test", 6);
             var expectedResponseDTO = new PostAlbumResponse(7, "Test", "Test", 6);
 
-            var response = await client.PostAsJsonAsync("api/Album/add", requestDTO);
+            var response = await client.PostAsJsonAsync("api/Album", requestDTO);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
@@ -186,7 +176,7 @@ namespace RecordShop.Tests.Integration
             var client = _factory.CreateClient();
             var requestDTO = new PostAlbumRequest("Test", "Test", -1);
 
-            var response = await client.PostAsJsonAsync("api/Album/add", requestDTO);
+            var response = await client.PostAsJsonAsync("api/Album/", requestDTO);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
@@ -199,7 +189,7 @@ namespace RecordShop.Tests.Integration
             var requestDTO = new PutAlbumRequest("Test", "Test", 6);
             var expectedResponseDTO = new PutAlbumResponse(id, "Test", "Test", 6);
 
-            var response = await client.PutAsJsonAsync($"api/Album/replace/{id}", requestDTO);
+            var response = await client.PutAsJsonAsync($"api/Album/{id}", requestDTO);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
 
@@ -224,7 +214,7 @@ namespace RecordShop.Tests.Integration
             int id = 3;
             var requestDTO = new PutAlbumRequest("Test", "Test", -1);
 
-            var response = await client.PutAsJsonAsync($"api/Album/replace/{id}", requestDTO);
+            var response = await client.PutAsJsonAsync($"api/Album/{id}", requestDTO);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.BadRequest);
         }
@@ -236,7 +226,7 @@ namespace RecordShop.Tests.Integration
             int id = 10000000;
             var requestDTO = new PutAlbumRequest("Test", "Test", 3);
 
-            var response = await client.PutAsJsonAsync($"api/Album/replace/{id}", requestDTO);
+            var response = await client.PutAsJsonAsync($"api/Album/{id}", requestDTO);
 
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }

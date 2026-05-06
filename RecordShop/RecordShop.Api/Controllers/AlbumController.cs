@@ -36,7 +36,7 @@ namespace RecordShop.Api.Controllers
             return Ok(album);
         }
 
-        [HttpPost("add")]
+        [HttpPost]
         public async Task<IActionResult> PostAlbumAsync([FromBody] PostAlbumRequest requestDTO)
         {
             var postedAlbum = await _albumService.PostAlbumAsync(requestDTO);
@@ -48,7 +48,7 @@ namespace RecordShop.Api.Controllers
             );
         }
 
-        [HttpPut("replace/{id:min(1)}")]
+        [HttpPut("{id:min(1)}")]
         public async Task<IActionResult> PutAlbumAsync([FromBody] PutAlbumRequest requestDTO, int id)
         {
             var putAlbum = await _albumService.PutAlbumAsync(requestDTO, id);
