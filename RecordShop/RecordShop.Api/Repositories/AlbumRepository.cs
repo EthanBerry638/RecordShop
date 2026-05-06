@@ -24,11 +24,12 @@ namespace RecordShop.Api.Repositories
             return await _db.Albums.FirstOrDefaultAsync(a => a.Id == id);
         }
 
-        public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postedAlbum)
+        public async Task<Album> PostAlbumAsync(Album postedAlbum)
         {
-            var album = new PostAlbumRequestResponse("test", "test", 40);
+            await _db.Albums.AddAsync(postedAlbum);
+            await _db.SaveChangesAsync();
 
-            return album;
+            return postedAlbum;
         }
     }
 }

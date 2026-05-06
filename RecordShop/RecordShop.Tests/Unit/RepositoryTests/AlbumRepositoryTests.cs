@@ -96,14 +96,14 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         }
 
         [Test]
-        public async Task PostAlbumAsync_ShouldReturnDTO_WhenDTOIsValid()
+        public async Task PostAlbumAsync_ShouldReturnAlbum_WhenAlbumIsValid()
         {
-            var testAlbum = new PostAlbumRequestResponse("test", "test", 40);
+            var testAlbum = new Album { Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Price = 15.00M };
 
             var result = await _albumRepository.PostAlbumAsync(testAlbum);
 
+            result.Id.Should().NotBe(0);
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(testAlbum);
         }
     }
 }
