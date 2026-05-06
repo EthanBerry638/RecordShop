@@ -212,5 +212,18 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<ArgumentException>();
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldNotThrowAnExceptionAndReturnNull_WhenGetByIdReturnsNull()
+        {
+            int id = 99;
+            var albumToUpdate = new PutAlbumRequest("Updated Title", "Updated Artist", 15.99M);
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync((Album)null!);
+
+            var result = await _albumService.PutAlbumAsync(albumToUpdate, id);
+
+            result.Should().BeNull();
+        }
     }
 }
