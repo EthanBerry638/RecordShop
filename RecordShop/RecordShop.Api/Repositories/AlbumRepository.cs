@@ -26,7 +26,7 @@ namespace RecordShop.Api.Repositories
 
         public async Task<PostAlbumRequestResponse?> PostAlbumAsync(PostAlbumRequestResponse postedAlbum)
         {
-            var album = new PostAlbumRequestResponse("placeholder", "placeholder", 2);
+            var album = new PostAlbumRequestResponse("test", "test", 40);
 
             return album;
         }
