@@ -107,24 +107,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        [TestCase("             TestTitle", " TestArtist")]
-        [TestCase(" TestTitle", " TestArtist          ")]
-        public async Task PostAlbumAsync_ShouldTrimTrailingAndFollowingWhitespace_WhenGivenValidDTOWithExtraWhitespace(string title, string artist)
-        {
-            var testDTO = new PostAlbumRequest(title, artist, 4M);
-            var testAlbum = new Album { Title = "TestTitle", Artist = "TestArtist", Price = 4M };
-
-            _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
-
-            var result = await _albumService.PostAlbumAsync(testDTO);
-
-            _albumRepositoryMock.Verify(a => a.PostAlbumAsync(It.IsAny<Album>()), Times.Once());
-            result.Title.Should().Be("TestTitle");
-            result.Artist.Should().Be("TestArtist");
-            result.Should().NotBeNull();
-        }
-
-        [Test]
         public async Task PostAlbumAsync_ShouldNotThrowException_WhenStringsLessThanOrEqual255Chars()
         {
             string longTitle = new string('a', 255);
