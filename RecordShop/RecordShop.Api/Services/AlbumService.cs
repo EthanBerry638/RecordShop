@@ -56,6 +56,8 @@ namespace RecordShop.Api.Services
 
             if (putAlbumDTO.Price < 0 || putAlbumDTO.Price >= 2000000) throw new InvalidPriceException();
 
+            if (string.IsNullOrWhiteSpace(title) || string.IsNullOrWhiteSpace(artist)) throw new EmptyStringException();
+
             if (title!.Length > 255 || artist!.Length > 255) throw new LongStringException();
 
             var albumToUpdate = await GetAlbumByIdAsync(id);
