@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Services;
 
 namespace RecordShop.Api.Controllers
@@ -33,6 +34,12 @@ namespace RecordShop.Api.Controllers
             }
 
             return Ok(album);
+        }
+
+        [HttpPost("add")]
+        public async Task<IActionResult> PostAlbumAsync(PostAlbumRequestResponse requestDTO)
+        {
+            return Ok();
         }
     }
 }
