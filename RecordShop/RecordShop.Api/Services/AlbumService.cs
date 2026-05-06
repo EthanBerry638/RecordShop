@@ -44,9 +44,7 @@ namespace RecordShop.Api.Services
 
             var postResult = await _albumRepository.PostAlbumAsync(postedAlbum);
 
-            var responseDTO = new PostAlbumRequestResponse(postResult.Title, postResult.Artist, postResult.Price);
-
-            return responseDTO;
+            return new PostAlbumRequestResponse(postResult.Title, postResult.Artist, postResult.Price);
         }
     }
 }
