@@ -122,5 +122,20 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var createdResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
             createdResult.RouteValues!["id"].Should().Be(1);
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldReturnCreated_WhenServiceReturnsDTOWithUpdates()
+        {
+            int id = 1;
+            var testRequest = new PutAlbumRequest("Test", "Test", 4M);
+            var testResponse = new PutAlbumResponse(1, "Test New", "Test New", 4M);
+
+            _albumServiceMock.Setup(a => a.PutAlbumAsync(testRequest, id)).ReturnsAsync(testResponse);
+
+            var result = await _albumController.PutAlbumAsync(testRequest, id);
+
+            var createdResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
+            createdResult.RouteValues!["id"].Should().Be(1);
+        }
     }
 }
