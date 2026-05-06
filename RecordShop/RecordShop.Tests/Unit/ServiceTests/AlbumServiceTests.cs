@@ -331,7 +331,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [TestCase(null, null)]
         [TestCase("", "")]
         [TestCase("              ", "              ")]
-        public async Task PutAlbumAsync_ShouldThrowException_WhenTitleOrAuthorIsNullOrEmpty(string? title, string? author)
+        public async Task PutAlbumAsync_ShouldThrowException_WhenTitleOrArtistIsNullOrEmpty(string? title, string? author)
         {
             int id = 1;
             var testDTO = new PutAlbumRequest(title!, author!, 2);
