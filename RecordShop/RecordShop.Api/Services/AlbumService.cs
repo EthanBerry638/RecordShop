@@ -26,7 +26,7 @@ namespace RecordShop.Api.Services
             return await _albumRepository.GetAlbumByIdAsync(id);
         }
 
-        public async Task<PostAlbumRequestResponse> PostAlbumAsync(PostAlbumRequestResponse postAlbumDTO)
+        public async Task<PostAlbumResponse> PostAlbumAsync(PostAlbumRequest postAlbumDTO)
         {
             var title = postAlbumDTO.Title?.Trim();
             var artist = postAlbumDTO.Artist?.Trim();
@@ -46,7 +46,7 @@ namespace RecordShop.Api.Services
 
             var postResult = await _albumRepository.PostAlbumAsync(postedAlbum);
 
-            return new PostAlbumRequestResponse(postResult.Title, postResult.Artist, postResult.Price);
+            return new PostAlbumResponse(postResult.Id, postResult.Title, postResult.Artist, postResult.Price);
         }
     }
 }

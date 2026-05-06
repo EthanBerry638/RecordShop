@@ -37,7 +37,7 @@ namespace RecordShop.Api.Controllers
         }
 
         [HttpPost("add")]
-        public async Task<IActionResult> PostAlbumAsync(PostAlbumRequestResponse requestDTO)
+        public async Task<IActionResult> PostAlbumAsync(PostAlbumRequest requestDTO)
         {
             var postedAlbum = await _albumService.PostAlbumAsync(requestDTO);
 

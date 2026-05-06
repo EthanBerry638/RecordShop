@@ -106,7 +106,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [Test]
         public async Task PostAlbumAsync_ShouldThrowException_WhenPriceIsNegative()
         {
-            var testDTO = new PostAlbumRequestResponse("Test", "Test", -1);
+            var testDTO = new PostAlbumRequest("Test", "Test", -1);
 
             var act = () => _albumService.PostAlbumAsync(testDTO);
 
@@ -119,7 +119,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [TestCase(2000001)]
         public async Task PostAlbumAsync_ShouldThrowException_WhenPriceIsTooHigh(decimal price)
         {
-            var testDTO = new PostAlbumRequestResponse("Test", "Test", price);
+            var testDTO = new PostAlbumRequest("Test", "Test", price);
 
             var act = () => _albumService.PostAlbumAsync(testDTO);
 
@@ -132,7 +132,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [TestCase("              ")]
         public async Task PostAlbumAsync_ShouldThrowException_WhenTitleIsNullOrEmpty(string? title)
         {
-            var testDTO = new PostAlbumRequestResponse(title!, "Test", 2);
+            var testDTO = new PostAlbumRequest(title!, "Test", 2);
 
             var act = () => _albumService.PostAlbumAsync(testDTO);
 
@@ -142,7 +142,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [Test]
         public async Task PostAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
         {
-            var testDTO = new PostAlbumRequestResponse("Test", "Test", 4M);
+            var testDTO = new PostAlbumRequest("Test", "Test", 4M);
             var testAlbum = new Album { Title = "Test", Artist = "Test", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
@@ -158,7 +158,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [TestCase(" TestTitle", " TestArtist          ")]
         public async Task PostAlbumAsync_ShouldTrimTrailingAndFollowingWhitespace_WhenGivenValidDTOWithExtraWhitespace(string title, string artist)
         {
-            var testDTO = new PostAlbumRequestResponse(title, artist, 4M);
+            var testDTO = new PostAlbumRequest(title, artist, 4M);
             var testAlbum = new Album { Title = "TestTitle", Artist = "TestArtist", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
@@ -177,7 +177,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
             string longTitle = new string('a', 256);
             string longArtist = new string('a', 256);
 
-            var testDTO = new PostAlbumRequestResponse(longTitle, longArtist, 2);
+            var testDTO = new PostAlbumRequest(longTitle, longArtist, 2);
 
             var act = () => _albumService.PostAlbumAsync(testDTO);
 
@@ -190,7 +190,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
             string longTitle = new string('a', 255);
             string longArtist = new string('a', 255);
 
-            var testDTO = new PostAlbumRequestResponse(longTitle, longArtist, 4M);
+            var testDTO = new PostAlbumRequest(longTitle, longArtist, 4M);
             var testAlbum = new Album { Title = longTitle, Artist = longArtist, Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
