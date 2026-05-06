@@ -151,6 +151,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             result.Should().BeFalse();
 
+            _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
             _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
         }
     }
