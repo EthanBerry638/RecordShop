@@ -287,5 +287,26 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>(), id), Times.Once());
         }
+
+        [Test]
+        public async Task PutAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
+        {  
+            int id = 1;
+
+            var testDTO = new PutAlbumRequest("New", "New", 4M);
+            var existingAlbum = new Album { Id = id, Title = "Old Title", Artist = "Old Artist", Price = 2M };
+            var updatedAlbum = new Album { Id = id, Title = "New", Artist = "New", Price = 4M };
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
+
+            _albumRepositoryMock.Setup(a => a.PutAlbumAsync(It.IsAny<Album>(), id)).ReturnsAsync(updatedAlbum);
+
+            var result = await _albumService.PutAlbumAsync(testDTO, id);
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(updatedAlbum);
+
+            _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>(), id), Times.Once());
+        }
     }
 }
