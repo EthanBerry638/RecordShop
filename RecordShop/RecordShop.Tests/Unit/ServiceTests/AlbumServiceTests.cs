@@ -141,7 +141,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         }
 
         [Test]
-        public async Task DeleteAlbumByIdAsync_ShouldNotThrowAnExceptionAndReturnFalse_WhenGetByIdReturnsNull()
+        public async Task DeleteAlbumByIdAsync_ShouldReturnFalse_WhenGetByIdReturnsNull()
         {
             int id = 1;
 
@@ -152,6 +152,22 @@ namespace RecordShop.Tests.Unit.ServiceTests
             result.Should().BeFalse();
 
             _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
+        }
+
+        [Test]
+        public async Task DeleteAlbumByIdAsync_ShouldReturnTrue_WhenGetByIdReturnsAnAlbum()
+        {
+            int id = 1;
+            var deletedAlbum = new Album { Id = id, Title = "Deleted", Artist = "Delted", Price = 4M };
+
+            _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
+
+            var result = await _albumService.DeleteAlbumByIdAync(id);
+
+            result.Should().BeTrue();
+
+            _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
+            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
         }
     }
 }
