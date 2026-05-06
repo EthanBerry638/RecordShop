@@ -53,6 +53,11 @@ namespace RecordShop.Api.Controllers
         {
             var putAlbum = await _albumService.PutAlbumAsync(requestDTO, id);
 
+            if (putAlbum == null)
+            {
+                return NotFound();
+            }
+
             return CreatedAtAction(
                 nameof(GetAlbumByIdAsync),
                 new { Id = putAlbum!.Id },

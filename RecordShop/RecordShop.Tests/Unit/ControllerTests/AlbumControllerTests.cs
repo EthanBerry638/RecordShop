@@ -148,7 +148,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             var result = await _albumController.PutAlbumAsync(testRequest, id);
 
-            var createdResult = result.Should().BeOfType<NotFoundObjectResult>().Subject;
+            var createdResult = result.Should().BeOfType<NotFoundResult>().Subject;
         }
     }
 }
