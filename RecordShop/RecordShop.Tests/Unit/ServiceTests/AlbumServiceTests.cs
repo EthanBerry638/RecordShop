@@ -112,5 +112,18 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             await act.Should().ThrowAsync<InvalidPriceException>();
         }
+
+        [Test]
+        [TestCase(null)]
+        [TestCase("")]
+        [TestCase("              ")]
+        public async Task PostAlbumAsync_ShouldThrowException_WhenTitleIsNullOrEmpty(string? title)
+        {
+            var testDTO = new PostAlbumRequestResponse(title!, "Test", 2);
+
+            var act = () => _albumService.PostAlbumAsync(testDTO);
+
+            await act.Should().ThrowAsync<EmptyStringException>();
+        }
     }
 }
