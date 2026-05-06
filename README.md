@@ -3,9 +3,9 @@
 API for managing a record shop inventory
 
 ## Features 💿
-Retrieve Inventory: Get all albums or search by specific ID
+CRUD Endpoints for Albums
 
-Error Handling: Global exception middleware
+Error Handling: Global exception handling middleware
 
 Testing: Unit and Integration tests for existing endpoints
 
@@ -27,7 +27,6 @@ Testing: NUnit, Fluent Assertions and Moq
 *Note: Data is in memory and will seed automatically on application restart.*
 
 ## Roadmap 🛣️
-Finish CRUD endpoints for albums
 
 Refactor to use DTOs for GET endpoints
 
