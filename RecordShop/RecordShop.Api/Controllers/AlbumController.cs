@@ -47,5 +47,11 @@ namespace RecordShop.Api.Controllers
                 postedAlbum
             );
         }
+
+        [HttpPut("replace")]
+        public async Task<IActionResult> PutAlbumAsync(PutAlbumRequest requestDTO, int id)
+        {
+            return Ok();
+        }
     }
 }
