@@ -18,6 +18,10 @@ namespace RecordShop.Api.Data
 
             if (albums != null )
             {
+                modelBuilder.Entity<Album>()
+                    .Property(a => a.Price)
+                    .HasColumnType("decimal(18, 2)");
+
                 modelBuilder.Entity<Album>().HasData(albums);
             }
         }
