@@ -47,7 +47,15 @@ app.UseMiddleware<ExceptionMiddleware>();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<RecordShopContext>();
-    dbContext.Database.EnsureCreated();
+
+    if (app.Environment.IsProduction())
+    {
+        dbContext.Database.Migrate();
+    }
+    else
+    {
+        dbContext.Database.EnsureCreated();
+    }
 }
 
 if (app.Environment.IsDevelopment())
