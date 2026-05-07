@@ -8,21 +8,21 @@ using RecordShop.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = "Server=localhost\\SQLEXPRESS;Database=RecordShop;User Id=EthanB;Password=SuperCoolPassword;Trust Server Certificate=True;";
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-//if (builder.Environment.IsDevelopment())
-//{
-//    var keepAliveConnection = new SqliteConnection(connectionString);
-//    keepAliveConnection.Open();
+if (builder.Environment.IsDevelopment())
+{
+    var keepAliveConnection = new SqliteConnection(connectionString);
+    keepAliveConnection.Open();
 
-//    builder.Services.AddDbContext<RecordShopContext>(options =>
-//             options.UseSqlite(keepAliveConnection));
-//}
-//else
-//{
-//    builder.Services.AddDbContext<RecordShopContext>(options =>
-//             options.UseSqlServer(connectionString));
-//}
+    builder.Services.AddDbContext<RecordShopContext>(options =>
+             options.UseSqlite(keepAliveConnection));
+}
+else
+{
+    builder.Services.AddDbContext<RecordShopContext>(options =>
+             options.UseSqlServer(connectionString));
+}
 
 builder.Services.AddDbContext<RecordShopContext>(options =>
                 options.UseSqlServer(connectionString));
@@ -47,25 +47,18 @@ var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
 
-//using (var scope = app.Services.CreateScope())
-//{
-//    var dbContext = scope.ServiceProvider.GetRequiredService<RecordShopContext>();
-
-//    if (app.Environment.IsProduction())
-//    {
-//        dbContext.Database.Migrate();
-//    }
-//    else
-//    {
-//        dbContext.Database.EnsureCreated();
-//    }
-//}
-
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<RecordShopContext>();
 
-    dbContext.Database.Migrate();
+    if (app.Environment.IsProduction())
+    {
+        dbContext.Database.Migrate();
+    }
+    else
+    {
+        dbContext.Database.EnsureCreated();
+    }
 }
 
 if (app.Environment.IsDevelopment())
