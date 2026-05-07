@@ -24,9 +24,6 @@ else
              options.UseSqlServer(connectionString));
 }
 
-builder.Services.AddDbContext<RecordShopContext>(options =>
-                options.UseSqlServer(connectionString));
-
 builder.Services.AddHealthChecks()
         .AddCheck<DatabaseHealthCheck>("Database_Check");
 
