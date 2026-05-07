@@ -10,14 +10,22 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
-var keepAliveConnection = new SqliteConnection(connectionString);
-keepAliveConnection.Open();
+if (builder.Environment.IsDevelopment())
+{
+    var keepAliveConnection = new SqliteConnection(connectionString);
+    keepAliveConnection.Open();
 
-builder.Services.AddDbContext<RecordShopContext>(options =>
-         options.UseSqlite(keepAliveConnection));
+    builder.Services.AddDbContext<RecordShopContext>(options =>
+             options.UseSqlite(keepAliveConnection));
+}
+else
+{
+    builder.Services.AddDbContext<RecordShopContext>(options =>
+             options.UseSqlServer(connectionString));
+}
 
 builder.Services.AddHealthChecks()
-    .AddCheck<DatabaseHealthCheck>("Database_Check");
+        .AddCheck<DatabaseHealthCheck>("Database_Check");
 
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
