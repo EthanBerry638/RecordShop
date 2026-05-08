@@ -13,15 +13,25 @@ namespace RecordShop.Api.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Album>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.Property(a => a.Title)
+                    .IsRequired()
+                    .HasMaxLength(150);
+                entity.Property(a => a.Artist)
+                    .IsRequired()
+                    .HasMaxLength(150);
+                entity.Property(a => a.Price)
+                    .IsRequired()
+                    .HasColumnType("decimal(18, 2)");
+            });
+
             var albumsJson = File.ReadAllText(_albumFilePath);
             var albums = JsonSerializer.Deserialize<List<Album>>(albumsJson);
 
-            if (albums != null )
+            if (albums != null)
             {
-                modelBuilder.Entity<Album>()
-                    .Property(a => a.Price)
-                    .HasColumnType("decimal(18, 2)");
-
                 modelBuilder.Entity<Album>().HasData(albums);
             }
         }
