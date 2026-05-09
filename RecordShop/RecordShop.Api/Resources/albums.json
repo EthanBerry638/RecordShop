@@ -2,37 +2,43 @@
   {
     "Id": 1,
     "Title": "Thriller",
-    "Artist": "Michael Jackson",
+    "Description": "The sixth studio album by Michael Jackson, featuring hits like 'Billie Jean' and 'Beat It'.",
+    "ReleaseDate": "1982-11-30",
     "Price": 10.99
   },
   {
     "Id": 2,
     "Title": "Back In Black",
-    "Artist": "AC/DC",
+    "Description": "The classic hard rock album by AC/DC, serving as a tribute to vocalist Bon Scott.",
+    "ReleaseDate": "1980-07-25",
     "Price": 9.49
   },
   {
     "Id": 3,
     "Title": "The Dark Side of the Moon",
-    "Artist": "Pink Floyd",
+    "Description": "A progressive rock concept album by Pink Floyd exploring themes of time, greed, and conflict.",
+    "ReleaseDate": "1973-03-01",
     "Price": 15.00
   },
   {
     "Id": 4,
     "Title": "Nevermind",
-    "Artist": "Nirvana",
+    "Description": "The definitive grunge album by Nirvana that popularized the Seattle sound globally.",
+    "ReleaseDate": "1991-09-24",
     "Price": 5.99
   },
   {
     "Id": 5,
     "Title": "Rumours",
-    "Artist": "Fleetwood Mac",
+    "Description": "A landmark pop-rock album by Fleetwood Mac known for its intricate vocal harmonies.",
+    "ReleaseDate": "1977-02-04",
     "Price": 12.50
   },
   {
     "Id": 6,
     "Title": "Abbey Road",
-    "Artist": "The Beatles",
+    "Description": "The final studio recording session by The Beatles, featuring a famous medley on side two.",
+    "ReleaseDate": "1969-09-26",
     "Price": 14.99
   }
 ]
