@@ -76,13 +76,13 @@ namespace RecordShop.Api.Services
             return new PutAlbumResponse(putResult.Id, putResult.Title, putResult.Description, putResult.ReleaseDate, putResult.Price);
         }
 
-        public async Task<bool> DeleteAlbumByIdAync(int id)
+        public async Task<bool> DeleteAlbumByIdAsync(int id)
         {
             var albumToDelete = await _albumRepository.GetAlbumByIdAsync(id);
 
             if (albumToDelete == null) return false;
 
-            return await _albumRepository.DeleteAlbumByIdAync(id);
+            return await _albumRepository.DeleteAlbumByIdAsync(id);
         }
     }
 }

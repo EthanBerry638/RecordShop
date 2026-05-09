@@ -181,7 +181,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync((Album)null!);
 
-            var result = await _albumService.DeleteAlbumByIdAync(id);
+            var result = await _albumService.DeleteAlbumByIdAsync(id);
 
             result.Should().BeFalse();
 
@@ -195,14 +195,14 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var deletedAlbum = new Album { Id = id, Title = "Deleted", Description = "Deleted", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
-            _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(true);
+            _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAsync(id)).ReturnsAsync(true);
 
-            var result = await _albumService.DeleteAlbumByIdAync(id);
+            var result = await _albumService.DeleteAlbumByIdAsync(id);
 
             result.Should().BeTrue();
 
             _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
-            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
+            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAsync(id), Times.Once());
         }
 
         [Test]
@@ -212,14 +212,14 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var deletedAlbum = new Album { Id = id, Title = "Deleted", Description = "Deleted", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
-            _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(false);
+            _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAsync(id)).ReturnsAsync(false);
 
-            var result = await _albumService.DeleteAlbumByIdAync(id);
+            var result = await _albumService.DeleteAlbumByIdAsync(id);
 
             result.Should().BeFalse();
 
             _albumRepositoryMock.Verify(a => a.GetAlbumByIdAsync(id), Times.Once());
-            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAync(id), Times.Once());
+            _albumRepositoryMock.Verify(a => a.DeleteAlbumByIdAsync(id), Times.Once());
         }
     }
 }

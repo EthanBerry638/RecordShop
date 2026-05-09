@@ -186,7 +186,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         {
             int id = 1000000;
 
-            _albumServiceMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(false);
+            _albumServiceMock.Setup(a => a.DeleteAlbumByIdAsync(id)).ReturnsAsync(false);
 
             var result = await _albumController.DeleteAlbumByIdAsync(id);
 
@@ -198,7 +198,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         {
             int id = 1;
 
-            _albumServiceMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(true);
+            _albumServiceMock.Setup(a => a.DeleteAlbumByIdAsync(id)).ReturnsAsync(true);
 
             var result = await _albumController.DeleteAlbumByIdAsync(id);
 

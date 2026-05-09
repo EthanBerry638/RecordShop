@@ -152,7 +152,7 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         {
             int existingId = 1;
 
-            var result = await _albumRepository.DeleteAlbumByIdAync(existingId);
+            var result = await _albumRepository.DeleteAlbumByIdAsync(existingId);
 
             result.Should().BeTrue();
 
@@ -165,7 +165,7 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         {
             int existingId = 500000;
 
-            var result = await _albumRepository.DeleteAlbumByIdAync(existingId);
+            var result = await _albumRepository.DeleteAlbumByIdAsync(existingId);
 
             result.Should().BeFalse();
         }
