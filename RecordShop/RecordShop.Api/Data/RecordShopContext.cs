@@ -26,7 +26,10 @@ namespace RecordShop.Api.Data
                     .IsRequired()
                     .HasPrecision(9, 2);
 
-                entity.ToTable(t => t.HasCheckConstraint("CK_Price_MaxLimit", "[Price] <= 2000000.00"));
+                if (!Database.IsSqlite())
+                {
+                    entity.ToTable(t => t.HasCheckConstraint("CK_Price_MaxLimit", "[Price] <= 2000000.00"));
+                }
             });
         }
 
