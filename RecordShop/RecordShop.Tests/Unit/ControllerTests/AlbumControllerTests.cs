@@ -47,11 +47,41 @@ namespace RecordShop.Tests.Unit.ControllerTests
         {
             var testList = new List<Album>
             {
-                new Album {Title = "Test Title1", Artist = "Test Artist1", Price = 0.00M },
-                new Album {Title = "Test Title2", Artist = "Test Artist2", Price = 0.00M },
-                new Album {Title = "Test Title3", Artist = "Test Artist3", Price = 0.00M },
-                new Album {Title = "Test Titl4", Artist = "Test Artist4", Price = 0.00M },
-                new Album {Title = "Test Title5", Artist = "Test Artist5", Price = 0.00M },
+                new Album
+                {
+                    Id = 1,
+                    Title = "Test Title1",
+                    Description = "Description for album 1",
+                    ReleaseDate = new DateOnly(2020, 1, 1),
+                    Price = 0.00M},
+                new Album
+                {
+                    Id = 2,
+                    Title = "Test Title2",
+                    Description = "Description for album 2",
+                    ReleaseDate = new DateOnly(2021, 5, 20),
+                    Price = 0.00M},
+                new Album
+                {
+                     Id = 3,
+                     Title = "Test Title3",
+                     Description = "Description for album 3",
+                     ReleaseDate = new DateOnly(2022, 11, 15),
+                     Price = 0.00M},
+                new Album
+                {
+                    Id = 4,
+                    Title = "Nevermind",
+                    Description = "Description for album 4",
+                    ReleaseDate = new DateOnly(1991, 9, 24),
+                    Price = 0.00M},
+                new Album
+                {
+                    Id = 5,
+                    Title = "Test Title5",
+                    Description = "Description for album 5",
+                 ReleaseDate = new DateOnly(2023, 3, 10),
+                    Price = 0.00M}
             };
 
             _albumServiceMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
@@ -76,7 +106,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task GetAlbumByIdAsync_ShouldReturnOkWithAlbum_WhenServiceReturnsAnAlbum()
         {
-            var testAlbum = new Album { Id = 2, Title = "TestTitle", Artist = "TestArtist", Price = 12.00M };
+            var testAlbum = new Album { Id = 2, Title = "TestTitle", Description = "Description", ReleaseDate = new DateOnly(2022, 2, 2), Price = 12.00M };
 
             _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(2)).ReturnsAsync(testAlbum);
 
@@ -112,8 +142,8 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task PostAlbumAsync_ShouldReturnCreated_WhenServiceReturnsDTO()
         {
-            var testRequest = new PostAlbumRequest("Test", "Test", 4M);
-            var testResponse = new PostAlbumResponse(1, "Test", "Test", 4M); 
+            var testRequest = new PostAlbumRequest("Test", "Test", null, 4M);
+            var testResponse = new PostAlbumResponse(1, "Test", "Test", null, 4M);
 
             _albumServiceMock.Setup(a => a.PostAlbumAsync(testRequest)).ReturnsAsync(testResponse);
 
@@ -127,8 +157,8 @@ namespace RecordShop.Tests.Unit.ControllerTests
         public async Task PutAlbumAsync_ShouldReturnCreated_WhenServiceReturnsDTOWithUpdates()
         {
             int id = 1;
-            var testRequest = new PutAlbumRequest("Test", "Test", 4M);
-            var testResponse = new PutAlbumResponse(1, "Test New", "Test New", 4M);
+            var testRequest = new PutAlbumRequest("Test", "Test", null, 4M);
+            var testResponse = new PutAlbumResponse(1, "Test New", "Test New", new DateOnly(2024, 23, 4), 4M);
 
             _albumServiceMock.Setup(a => a.PutAlbumAsync(testRequest, id)).ReturnsAsync(testResponse);
 
@@ -142,7 +172,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         public async Task PutAlbumAsync_ShouldReturnNotFound_WhenServiceReturnsNull()
         {
             int id = 100;
-            var testRequest = new PutAlbumRequest("Test", "Test", 4M);
+            var testRequest = new PutAlbumRequest("Test", "Test", null, 4M);
 
             _albumServiceMock.Setup(a => a.PutAlbumAsync(testRequest, id)).ReturnsAsync((PutAlbumResponse)null!);
 

@@ -22,20 +22,50 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [Test]
         public async Task GetAllAlbumsAsync_ShouldReturnList_WhenRepositoryReturnsList()
         {
-            var testAlbumList = new List<Album>
+            var testList = new List<Album>
             {
-                new Album {Title = "Test Title1", Artist = "Test Artist1", Price = 0.00M },
-                new Album {Title = "Test Title2", Artist = "Test Artist2", Price = 0.00M },
-                new Album {Title = "Test Title3", Artist = "Test Artist3", Price = 0.00M },
-                new Album {Title = "Test Titl4", Artist = "Test Artist4", Price = 0.00M },
-                new Album {Title = "Test Title5", Artist = "Test Artist5", Price = 0.00M },
+                new Album
+                {
+                    Id = 1,
+                    Title = "Test Title1",
+                    Description = "Description for album 1",
+                    ReleaseDate = new DateOnly(2020, 1, 1),
+                    Price = 0.00M},
+                new Album
+                {
+                    Id = 2,
+                    Title = "Test Title2",
+                    Description = "Description for album 2",
+                    ReleaseDate = new DateOnly(2021, 5, 20),
+                    Price = 0.00M},
+                new Album
+                {
+                     Id = 3,
+                     Title = "Test Title3",
+                     Description = "Description for album 3",
+                     ReleaseDate = new DateOnly(2022, 11, 15),
+                     Price = 0.00M},
+                new Album
+                {
+                    Id = 4,
+                    Title = "Nevermind",
+                    Description = "Description for album 4",
+                    ReleaseDate = new DateOnly(1991, 9, 24),
+                    Price = 0.00M},
+                new Album
+                {
+                    Id = 5,
+                    Title = "Test Title5",
+                    Description = "Description for album 5",
+                 ReleaseDate = new DateOnly(2023, 3, 10),
+                    Price = 0.00M}
             };
 
-            _albumRepositoryMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testAlbumList);
+            _albumRepositoryMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
 
             var result = await _albumService.GetAllAlbumsAsync();
 
-            result.Should().BeEqualTo(testAlbumList);
+            result.Should().BeEqualTo(testList);
             result.Should().HaveCount(5);
         }
 
@@ -81,7 +111,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         public async Task GetAlbumByIdAsync_ShouldReturnAlbum_WhenAlbumFoundByRepo()
         {
             int id = 1;
-            var testAlbum = new Album { Id = 1, Title = "Test Title1", Artist = "Test Artist1", Price = 0.00M };
+            var testAlbum = new Album { Id = 1, Title = "Test Title1", Description = "Test Desc 1", ReleaseDate = new DateOnly(2002, 2, 2), Price = 0.00M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(testAlbum);
 
@@ -95,8 +125,8 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [Test]
         public async Task PostAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
         {
-            var testDTO = new PostAlbumRequest("Test", "Test", 4M);
-            var testAlbum = new Album { Title = "Test", Artist = "Test", Price = 4M };
+            var testDTO = new PostAlbumRequest("Test", "Desc", new DateOnly(2001, 8, 1), 4M);
+            var testAlbum = new Album { Title = "Test", Description = "Desc", ReleaseDate =  new DateOnly(2001, 8, 1), Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
 
@@ -110,7 +140,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         public async Task PutAlbumAsync_ShouldNotThrowAnExceptionAndReturnNull_WhenGetByIdReturnsNull()
         {
             int id = 99;
-            var albumToUpdate = new PutAlbumRequest("Updated Title", "Updated Artist", 15.99M);
+            var albumToUpdate = new PutAlbumRequest("Updated Title", "Updated Desc", null, 15.99M);
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync((Album)null!);
 
@@ -121,12 +151,12 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
         [Test]
         public async Task PutAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
-        {  
+        {
             int id = 1;
 
-            var testDTO = new PutAlbumRequest("New", "New", 4M);
-            var existingAlbum = new Album { Id = id, Title = "Old Title", Artist = "Old Artist", Price = 2M };
-            var updatedAlbum = new Album { Id = id, Title = "New", Artist = "New", Price = 4M };
+            var testDTO = new PutAlbumRequest("New", "New", null, 4M);
+            var existingAlbum = new Album { Id = id, Title = "Old Title", Description = "Old Desc", ReleaseDate = new DateOnly(2001, 1, 1), Price = 2M };
+            var updatedAlbum = new Album { Id = id, Title = "New", Description = "New", ReleaseDate = null, Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(existingAlbum);
 
@@ -158,7 +188,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         public async Task DeleteAlbumByIdAsync_ShouldReturnTrue_WhenGetByIdReturnsAnAlbum()
         {
             int id = 1;
-            var deletedAlbum = new Album { Id = id, Title = "Deleted", Artist = "Delted", Price = 4M };
+            var deletedAlbum = new Album { Id = id, Title = "Deleted", Description = "Deleted", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
             _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(true);
@@ -175,7 +205,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         public async Task DeleteAlbumByIdAsync_ShouldReturnFalse_WhenGetByIdReturnsAnAlbumButRepositoryReturnsFalse()
         {
             int id = 1;
-            var deletedAlbum = new Album { Id = id, Title = "Deleted", Artist = "Delted", Price = 4M };
+            var deletedAlbum = new Album { Id = id, Title = "Deleted", Description = "Deleted", Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.GetAlbumByIdAsync(id)).ReturnsAsync(deletedAlbum);
             _albumRepositoryMock.Setup(a => a.DeleteAlbumByIdAync(id)).ReturnsAsync(false);

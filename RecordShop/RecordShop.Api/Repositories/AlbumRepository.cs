@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
-using RecordShop.Api.Models.DTOs;
 
 namespace RecordShop.Api.Repositories
 {

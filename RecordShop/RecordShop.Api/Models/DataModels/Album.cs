@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace RecordShop.Api.Models.DataModels
+﻿namespace RecordShop.Api.Models.DataModels
 {
     public class Album
     {

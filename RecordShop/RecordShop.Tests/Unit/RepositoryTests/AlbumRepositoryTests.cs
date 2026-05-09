@@ -5,7 +5,6 @@ using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
 using System.Text.Json;
-using RecordShop.Api.Models.DTOs;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
@@ -86,7 +85,10 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         [Test]
         public async Task GetAlbumByIdAsync_ShouldReturnAlbum_WhenDatabaseDoesAlbumWithSpecifiedId()
         {
-            var testAlbum = new Album { Id = 3, Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Price = 15.00M };
+            var testAlbum = new Album { Id = 3, Title = "The Dark Side of the Moon",
+                Description = "A progressive rock concept album by Pink Floyd exploring themes of time, greed, and conflict.",
+                ReleaseDate = new DateOnly(1973, 03, 01),
+                Price = 15.00M };
             int testId = 3;
 
             var result = await _albumRepository.GetAlbumByIdAsync(testId);
@@ -98,7 +100,14 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         [Test]
         public async Task PostAlbumAsync_ShouldReturnAlbum_WhenAlbumIsValid()
         {
-            var testAlbum = new Album { Title = "The Dark Side of the Moon", Artist = "Pink Floyd", Price = 15.00M };
+            var testAlbum = new Album
+            {
+                Id = 3,
+                Title = "The Dark Side of the Moon",
+                Description = "A progressive rock concept album by Pink Floyd exploring themes of time, greed, and conflict.",
+                ReleaseDate = new DateOnly(1973, 03, 01),
+                Price = 15.00M
+            };
 
             var result = await _albumRepository.PostAlbumAsync(testAlbum);
 
@@ -109,20 +118,28 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         [Test]
         public async Task PutAlbumAsync_ShouldReturnAlbum_WhenAlbumIsValid()
         {
-            var originalAlbum = new Album { Title = "Title", Artist = "Artist", Price = 9.99M };
+            var originalAlbum = new Album
+            {
+                Title = "The Dark Side of the Moon",
+                Description = "A progressive rock concept album by Pink Floyd exploring themes of time, greed, and conflict.",
+                ReleaseDate = new DateOnly(1973, 03, 01),
+                Price = 15.00M
+            };
 
             var seededAlbum = await _albumRepository.PostAlbumAsync(originalAlbum);
             var id = seededAlbum.Id;
 
             seededAlbum.Title = "Updated Title";
-            seededAlbum.Artist = "Updated Artist";
+            seededAlbum.Description = "Updated Desc";
+            seededAlbum.ReleaseDate = null;
             seededAlbum.Price = 12.99M;
 
             var result = await _albumRepository.PutAlbumAsync(seededAlbum);
 
             result.Should().NotBeNull();
             result.Title.Should().Be("Updated Title");
-            result.Artist.Should().Be("Updated Artist");
+            result.Description.Should().Be("Updated Desc");
+            result.ReleaseDate.Should().BeNull();
             result.Price.Should().Be(12.99M);
 
             var inDb = await _albumRepository.GetAlbumByIdAsync(id);
@@ -139,7 +156,7 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             result.Should().BeTrue();
 
             var deletedAlbum = await _context.Albums.FindAsync(existingId);
-            deletedAlbum.Should().BeNull();  
+            deletedAlbum.Should().BeNull();
         }
 
         [Test]
