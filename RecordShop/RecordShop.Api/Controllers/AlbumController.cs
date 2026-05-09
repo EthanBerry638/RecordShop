@@ -10,9 +10,9 @@ namespace RecordShop.Api.Controllers
     {
         private readonly IAlbumService _albumService;
 
-        public AlbumController(IAlbumService albumSerivce)
+        public AlbumController(IAlbumService albumService)
         {
-            _albumService = albumSerivce;
+            _albumService = albumService;
         }
 
         [HttpGet]
