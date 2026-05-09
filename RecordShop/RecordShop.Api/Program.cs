@@ -31,6 +31,7 @@ builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
 
 builder.Services.AddTransient<ExceptionMiddleware>();
+builder.Services.AddTransient<LoggingMiddleware>();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -43,6 +44,7 @@ builder.Services.AddControllers(options =>
 var app = builder.Build();
 
 app.UseMiddleware<ExceptionMiddleware>();
+app.UseMiddleware<LoggingMiddleware>();
 
 using (var scope = app.Services.CreateScope())
 {
