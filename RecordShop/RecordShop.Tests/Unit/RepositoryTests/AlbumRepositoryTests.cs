@@ -104,11 +104,10 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         {
             var testAlbum = new Album
             {
-                Id = 3,
-                Title = "The Dark Side of the Moon",
-                Description = "A progressive rock concept album by Pink Floyd exploring themes of time, greed, and conflict.",
-                ReleaseDate = new DateOnly(1973, 03, 01),
-                Price = 15.00M
+                Title = "Brand New Album",
+                Description = "An Album That Is Brand New",
+                ReleaseDate = new DateOnly(1929,09,26),
+                Price = 14030.21M
             };
 
             var result = await _albumRepository.PostAlbumAsync(testAlbum);
