@@ -28,6 +28,8 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             _context.Database.EnsureCreated();
 
+            _context.SeedData();
+
             _albumRepository = new AlbumRepository(_context);
         }
 
