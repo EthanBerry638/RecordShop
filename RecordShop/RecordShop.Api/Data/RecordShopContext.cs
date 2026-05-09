@@ -8,6 +8,9 @@ namespace RecordShop.Api.Data
     {
         private readonly string _albumFilePath = "Resources\\albums.json";
         public DbSet<Album> Albums { get; set; }
+        public DbSet<Artist> Artists { get; set; }
+        public DbSet<Genre> Genres { get; set; }
+        public DbSet<Track> Tracks { get; set; }
         public RecordShopContext(DbContextOptions options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
