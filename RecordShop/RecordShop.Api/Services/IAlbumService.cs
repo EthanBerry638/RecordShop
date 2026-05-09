@@ -1,5 +1,4 @@
-﻿using RecordShop.Api.Models.DataModels;
-using RecordShop.Api.Models.DTOs;
+﻿using RecordShop.Api.Models.DTOs;
 
 namespace RecordShop.Api.Services
 {

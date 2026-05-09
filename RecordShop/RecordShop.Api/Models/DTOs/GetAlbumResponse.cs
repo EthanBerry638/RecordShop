@@ -8,5 +8,5 @@
         DateOnly? ReleaseDate,
         decimal Price
     )
-    {}
+    { }
 }

@@ -87,10 +87,14 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         [Test]
         public async Task GetAlbumByIdAsync_ShouldReturnAlbum_WhenDatabaseDoesAlbumWithSpecifiedId()
         {
-            var testAlbum = new Album { Id = 3, Title = "The Dark Side of the Moon",
+            var testAlbum = new Album
+            {
+                Id = 3,
+                Title = "The Dark Side of the Moon",
                 Description = "A progressive rock concept album by Pink Floyd exploring themes of time, greed, and conflict.",
                 ReleaseDate = new DateOnly(1973, 03, 01),
-                Price = 15.00M };
+                Price = 15.00M
+            };
             int testId = 3;
 
             var result = await _albumRepository.GetAlbumByIdAsync(testId);
@@ -106,7 +110,7 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             {
                 Title = "Brand New Album",
                 Description = "An Album That Is Brand New",
-                ReleaseDate = new DateOnly(1929,09,26),
+                ReleaseDate = new DateOnly(1929, 09, 26),
                 Price = 14030.21M
             };
 

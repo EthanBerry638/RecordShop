@@ -127,7 +127,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
         public async Task PostAlbumAsync_ShouldCallRepoMethodAndReturnCorrectDTO_WhenDTOIsValid()
         {
             var testDTO = new PostAlbumRequest("Test", "Desc", new DateOnly(2001, 8, 1), 4M);
-            var testAlbum = new Album { Title = "Test", Description = "Desc", ReleaseDate =  new DateOnly(2001, 8, 1), Price = 4M };
+            var testAlbum = new Album { Title = "Test", Description = "Desc", ReleaseDate = new DateOnly(2001, 8, 1), Price = 4M };
 
             _albumRepositoryMock.Setup(a => a.PostAlbumAsync(It.IsAny<Album>())).ReturnsAsync(testAlbum);
 

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using RecordShop.Api.Controllers;
-using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Services;
 
@@ -106,7 +105,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task GetAlbumByIdAsync_ShouldReturnOkWithAlbum_WhenServiceReturnsAnAlbum()
         {
-            var testAlbum = new GetAlbumResponse ( 2, "TestTitle", "Description", new DateOnly(2022, 2, 2), 12.00M );
+            var testAlbum = new GetAlbumResponse(2, "TestTitle", "Description", new DateOnly(2022, 2, 2), 12.00M);
 
             _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(2)).ReturnsAsync(testAlbum);
 
