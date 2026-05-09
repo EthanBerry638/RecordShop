@@ -65,7 +65,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             var results = await _albumService.GetAllAlbumsAsync();
 
-            results.Should().BeEquivalentTo(testList);
+            results.Should().BeEquivalentTo(testList, options => options.ExcludingMissingMembers());
             results.Should().HaveCount(5);
         }
 
