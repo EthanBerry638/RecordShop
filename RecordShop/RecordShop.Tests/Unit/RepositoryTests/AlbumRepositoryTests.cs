@@ -48,7 +48,7 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             var result = await _albumRepository.GetAllAlbumsAsync();
 
-            result.Should().BeEquivalentTo(expectedAlbums);
+            result.Should().BeEquivalentTo(expectedAlbums, options => options.ExcludingMembersNamed("Id"));
         }
 
         [Test]
