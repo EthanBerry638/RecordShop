@@ -39,7 +39,7 @@ namespace RecordShop.Tests.Integration
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var albums = JsonSerializer.Deserialize<List<Album>>(content, new JsonSerializerOptions
+            var albums = JsonSerializer.Deserialize<List<GetAlbumResponse>>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
@@ -70,7 +70,7 @@ namespace RecordShop.Tests.Integration
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var albums = JsonSerializer.Deserialize<List<Album>>(content, new JsonSerializerOptions
+            var albums = JsonSerializer.Deserialize<List<GetAlbumResponse>>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
@@ -122,13 +122,13 @@ namespace RecordShop.Tests.Integration
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
+            var album = JsonSerializer.Deserialize<GetAlbumResponse>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
 
             album.Should().NotBeNull();
-            album.Should().BeEquivalentTo(testAlbum);
+            album.Should().BeEquivalentTo(testAlbum, options => options.ExcludingMissingMembers());
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace RecordShop.Tests.Integration
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
+            var album = JsonSerializer.Deserialize<PostAlbumResponse>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
@@ -204,7 +204,7 @@ namespace RecordShop.Tests.Integration
 
             var content = await response.Content.ReadAsStringAsync();
 
-            var album = JsonSerializer.Deserialize<Album>(content, new JsonSerializerOptions
+            var album = JsonSerializer.Deserialize<PutAlbumResponse>(content, new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
             });
