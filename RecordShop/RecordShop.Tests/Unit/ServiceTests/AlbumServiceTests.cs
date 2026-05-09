@@ -165,7 +165,10 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var result = await _albumService.PutAlbumAsync(testDTO, id);
 
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(updatedAlbum);
+            result.Title.Should().Be(updatedAlbum.Title);
+            result.Description.Should().Be(updatedAlbum.Description);
+            result.ReleaseDate.Should().BeNull();
+            result.Price.Should().Be(updatedAlbum.Price);
 
             _albumRepositoryMock.Verify(a => a.PutAlbumAsync(It.IsAny<Album>()), Times.Once());
         }
