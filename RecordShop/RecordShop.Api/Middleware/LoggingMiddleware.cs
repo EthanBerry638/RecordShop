@@ -14,8 +14,16 @@ namespace RecordShop.Api.Middleware
         public async Task InvokeAsync(HttpContext context, RequestDelegate next)
         {
             Stopwatch sw = Stopwatch.StartNew();
-            
+
+            _logger.LogInformation("Handling request: {Method} {Path}",
+                context.Request.Method, context.Request.Path);
+
             await next(context);
+
+            sw.Stop();
+
+            _logger.LogInformation("Handling response: Status Code: {StatusCode}. Finished in: {Ms}ms",
+                context.Response.StatusCode, sw.ElapsedMilliseconds);
         }
     }
 }
