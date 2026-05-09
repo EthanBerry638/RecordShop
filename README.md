@@ -43,3 +43,7 @@ If you wish to change this, find `database.SeedData()` inside Program.cs and eit
 Relational endpoints e.g. Get Albums by Artist
 
 JWT Authentication
+
+Caching
+
+Rate limiting
