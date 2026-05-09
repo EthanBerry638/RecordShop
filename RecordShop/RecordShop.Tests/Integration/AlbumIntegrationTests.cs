@@ -155,8 +155,8 @@ namespace RecordShop.Tests.Integration
         public async Task PostAlbumAsyncEndpoint_ReturnsCreatedAtAction()
         {
             var client = _factory.CreateClient();
-            var requestDTO = new PostAlbumRequest("Test", "Test", new DateOnly(2024, 23, 4), 6);
-            var expectedResponseDTO = new PostAlbumResponse(7, "Test", "Test", new DateOnly(2024, 23, 4), 6);
+            var requestDTO = new PostAlbumRequest("Test", "Test", new DateOnly(2024, 3, 4), 6);
+            var expectedResponseDTO = new PostAlbumResponse(7, "Test", "Test", new DateOnly(2024, 3, 4), 6);
 
             var response = await client.PostAsJsonAsync("api/Album", requestDTO);
 
@@ -193,7 +193,7 @@ namespace RecordShop.Tests.Integration
             var client = _factory.CreateClient();
             int id = 3;
             var requestDTO = new PutAlbumRequest("Test", "Test", new DateOnly(2012, 3, 6), 6);
-            var expectedResponseDTO = new PutAlbumResponse(id, "Test", "Test", new DateOnly(2024, 23, 4), 6);
+            var expectedResponseDTO = new PutAlbumResponse(id, "Test", "Test", new DateOnly(2012, 3, 6), 6);
 
             var response = await client.PutAsJsonAsync($"api/Album/{id}", requestDTO);
 
@@ -218,7 +218,7 @@ namespace RecordShop.Tests.Integration
         {
             var client = _factory.CreateClient();
             int id = 3;
-            var requestDTO = new PutAlbumRequest("Test", "Test", new DateOnly(2024, 23, 4), -1);
+            var requestDTO = new PutAlbumRequest("Test", "Test", new DateOnly(2024, 2, 4), -1);
 
             var response = await client.PutAsJsonAsync($"api/Album/{id}", requestDTO);
 
