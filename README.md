@@ -8,6 +8,8 @@ CRUD Endpoints for Albums
 
 Error Handling: Global exception handling middleware
 
+Logging: Logging middleware that writes request information (http verb and url path) and response information (status code and elapsed ms)
+
 Testing: Unit and Integration tests for existing endpoints
 
 Health Checks: Endpoint to monitor API and Database health
