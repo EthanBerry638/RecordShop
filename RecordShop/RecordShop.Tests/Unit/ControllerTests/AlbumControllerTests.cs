@@ -36,7 +36,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _albumController.GetAllAlbumsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as List<Album>;
+            var value = okResult.Value as List<GetAlbumResponse>;
 
             value.Should().NotBeNull();
             value.Should().BeEmpty();
@@ -89,7 +89,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _albumController.GetAllAlbumsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as List<Album>;
+            var value = okResult.Value as List<GetAlbumResponse>;
 
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(testList);
@@ -115,7 +115,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             result.Should().BeOfType<OkObjectResult>();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as Album;
+            var value = okResult.Value as GetAlbumResponse;
 
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(testAlbum);
