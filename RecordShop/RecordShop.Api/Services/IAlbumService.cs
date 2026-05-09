@@ -5,8 +5,8 @@ namespace RecordShop.Api.Services
 {
     public interface IAlbumService
     {
-        Task<List<Album>> GetAllAlbumsAsync();
-        Task<Album?> GetAlbumByIdAsync(int id);
+        Task<List<GetAlbumResponse>> GetAllAlbumsAsync();
+        Task<GetAlbumResponse?> GetAlbumByIdAsync(int id);
         Task<PostAlbumResponse> PostAlbumAsync(PostAlbumRequest postAlbumDTO);
         Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id);
         Task<bool> DeleteAlbumByIdAync(int id);

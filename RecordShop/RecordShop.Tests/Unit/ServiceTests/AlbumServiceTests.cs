@@ -65,7 +65,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             var result = await _albumService.GetAllAlbumsAsync();
 
-            result.Should().BeEqualTo(testList);
+            result.Should().BeEquivalentTo(testList);
             result.Should().HaveCount(5);
         }
 
@@ -77,7 +77,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             var result = await _albumService.GetAllAlbumsAsync();
 
-            result.Should().BeEqualTo(testAlbumList);
+            result.Should().BeEquivalentTo(testAlbumList);
             result.Should().HaveCount(0);
         }
 

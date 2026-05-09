@@ -13,14 +13,31 @@ namespace RecordShop.Api.Services
             _albumRepository = albumRepository;
         }
 
-        public async Task<List<Album>> GetAllAlbumsAsync()
+        public async Task<List<GetAlbumResponse>> GetAllAlbumsAsync()
         {
-            return await _albumRepository.GetAllAlbumsAsync();
+            var albums = await _albumRepository.GetAllAlbumsAsync();
+
+            return albums.Select(a => new GetAlbumResponse(
+                a.Id,
+                a.Title,
+                a.Description,
+                a.ReleaseDate,
+                a.Price
+            )).ToList();
         }
 
-        public async Task<Album?> GetAlbumByIdAsync(int id)
+        public async Task<GetAlbumResponse?> GetAlbumByIdAsync(int id)
         {
-            return await _albumRepository.GetAlbumByIdAsync(id);
+            var album = await _albumRepository.GetAlbumByIdAsync(id);
+
+            return new GetAlbumResponse
+            (
+                album!.Id,
+                album.Title,
+                album.Description,
+                album.ReleaseDate,
+                album.Price
+            );
         }
 
         public async Task<PostAlbumResponse> PostAlbumAsync(PostAlbumRequest postAlbumDTO)
@@ -40,7 +57,7 @@ namespace RecordShop.Api.Services
 
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
         {
-            var albumToUpdate = await GetAlbumByIdAsync(id);
+            var albumToUpdate = await _albumRepository.GetAlbumByIdAsync(id);
 
             if (albumToUpdate == null)
             {

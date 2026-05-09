@@ -29,7 +29,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task GetAllAlbumsAsync_ShouldReturnOkWithEmptyList_WhenServiceReturnsEmptyList()
         {
-            var testList = new List<Album>();
+            var testList = new List<GetAlbumResponse>();
 
             _albumServiceMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
 
@@ -45,43 +45,43 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task GetAllAlbumsAsync_ShouldReturnOkWithList_WhenServiceReturnsSeededList()
         {
-            var testList = new List<Album>
+            var testList = new List<GetAlbumResponse>
             {
-                new Album
-                {
-                    Id = 1,
-                    Title = "Test Title1",
-                    Description = "Description for album 1",
-                    ReleaseDate = new DateOnly(2020, 1, 1),
-                    Price = 0.00M},
-                new Album
-                {
-                    Id = 2,
-                    Title = "Test Title2",
-                    Description = "Description for album 2",
-                    ReleaseDate = new DateOnly(2021, 5, 20),
-                    Price = 0.00M},
-                new Album
-                {
-                     Id = 3,
-                     Title = "Test Title3",
-                     Description = "Description for album 3",
-                     ReleaseDate = new DateOnly(2022, 11, 15),
-                     Price = 0.00M},
-                new Album
-                {
-                    Id = 4,
-                    Title = "Nevermind",
-                    Description = "Description for album 4",
-                    ReleaseDate = new DateOnly(1991, 9, 24),
-                    Price = 0.00M},
-                new Album
-                {
-                    Id = 5,
-                    Title = "Test Title5",
-                    Description = "Description for album 5",
-                 ReleaseDate = new DateOnly(2023, 3, 10),
-                    Price = 0.00M}
+                new GetAlbumResponse
+                (
+                    1,
+                    "Test Title1",
+                    "Description for album 1",
+                    new DateOnly(2020, 1, 1),
+                    0.00M),
+                new GetAlbumResponse
+                (
+                    2,
+                    "Test Title2",
+                    "Description for album 2",
+                    new DateOnly(2021, 5, 20),
+                    0.00M),
+                new GetAlbumResponse
+                (
+                     3,
+                     "Test Title3",
+                     "Description for album 3",
+                     new DateOnly(2022, 11, 15),
+                     0.00M),
+                new GetAlbumResponse
+                (
+                    4,
+                    "Nevermind",
+                    "Description for album 4",
+                    new DateOnly(1991, 9, 24),
+                    0.00M),
+                new GetAlbumResponse
+                (
+                    5,
+                    "Test Title5",
+                    "Description for album 5",
+                    new DateOnly(2023, 3, 10),
+                    0.00M)
             };
 
             _albumServiceMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
@@ -89,7 +89,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _albumController.GetAllAlbumsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as List<Album>;
+            var value = okResult.Value as List< Album>;
 
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(testList);
@@ -106,7 +106,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task GetAlbumByIdAsync_ShouldReturnOkWithAlbum_WhenServiceReturnsAnAlbum()
         {
-            var testAlbum = new Album { Id = 2, Title = "TestTitle", Description = "Description", ReleaseDate = new DateOnly(2022, 2, 2), Price = 12.00M };
+            var testAlbum = new GetAlbumResponse ( 2, "TestTitle", "Description", new DateOnly(2022, 2, 2), 12.00M );
 
             _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(2)).ReturnsAsync(testAlbum);
 
@@ -124,7 +124,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         [Test]
         public async Task GetAlbumByIdAsync_ShouldReturnNotFound_WhenServiceReturnsNull()
         {
-            _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(100)).ReturnsAsync((Album)null!);
+            _albumServiceMock.Setup(a => a.GetAlbumByIdAsync(100)).ReturnsAsync((GetAlbumResponse)null!);
 
             var result = await _albumController.GetAlbumByIdAsync(100);
 
