@@ -15,60 +15,61 @@ namespace RecordShop.Api.Migrations
                 name: "Albums",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Title = table.Column<string>(type: "TEXT", maxLength: 150, nullable: false),
-                    Description = table.Column<string>(type: "TEXT", maxLength: 250, nullable: false),
-                    ReleaseDate = table.Column<DateOnly>(type: "TEXT", nullable: true),
-                    Price = table.Column<decimal>(type: "TEXT", precision: 9, scale: 2, nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    ReleaseDate = table.Column<DateOnly>(type: "date", nullable: true),
+                    Price = table.Column<decimal>(type: "decimal(9,2)", precision: 9, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Albums", x => x.Id);
+                    table.CheckConstraint("CK_Price_MaxLimit", "[Price] <= 2000000.00");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Artist",
+                name: "Artists",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Bio = table.Column<string>(type: "TEXT", nullable: true),
-                    Age = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Bio = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Age = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Artist", x => x.Id);
+                    table.PrimaryKey("PK_Artists", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Genre",
+                name: "Genres",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Genre", x => x.Id);
+                    table.PrimaryKey("PK_Genres", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Track",
+                name: "Tracks",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    DurationInSec = table.Column<int>(type: "INTEGER", nullable: false),
-                    AlbumId = table.Column<int>(type: "INTEGER", nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DurationInSec = table.Column<int>(type: "int", nullable: false),
+                    AlbumId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Track", x => x.Id);
+                    table.PrimaryKey("PK_Tracks", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Track_Albums_AlbumId",
+                        name: "FK_Tracks_Albums_AlbumId",
                         column: x => x.AlbumId,
                         principalTable: "Albums",
                         principalColumn: "Id",
@@ -79,8 +80,8 @@ namespace RecordShop.Api.Migrations
                 name: "AlbumArtist",
                 columns: table => new
                 {
-                    AlbumsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    ArtistsId = table.Column<int>(type: "INTEGER", nullable: false)
+                    AlbumsId = table.Column<int>(type: "int", nullable: false),
+                    ArtistsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,9 +93,9 @@ namespace RecordShop.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AlbumArtist_Artist_ArtistsId",
+                        name: "FK_AlbumArtist_Artists_ArtistsId",
                         column: x => x.ArtistsId,
-                        principalTable: "Artist",
+                        principalTable: "Artists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -103,8 +104,8 @@ namespace RecordShop.Api.Migrations
                 name: "AlbumGenre",
                 columns: table => new
                 {
-                    AlbumsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GenresId = table.Column<int>(type: "INTEGER", nullable: false)
+                    AlbumsId = table.Column<int>(type: "int", nullable: false),
+                    GenresId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -116,9 +117,9 @@ namespace RecordShop.Api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AlbumGenre_Genre_GenresId",
+                        name: "FK_AlbumGenre_Genres_GenresId",
                         column: x => x.GenresId,
-                        principalTable: "Genre",
+                        principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -127,22 +128,22 @@ namespace RecordShop.Api.Migrations
                 name: "ArtistGenre",
                 columns: table => new
                 {
-                    ArtistsId = table.Column<int>(type: "INTEGER", nullable: false),
-                    GenresId = table.Column<int>(type: "INTEGER", nullable: false)
+                    ArtistsId = table.Column<int>(type: "int", nullable: false),
+                    GenresId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_ArtistGenre", x => new { x.ArtistsId, x.GenresId });
                     table.ForeignKey(
-                        name: "FK_ArtistGenre_Artist_ArtistsId",
+                        name: "FK_ArtistGenre_Artists_ArtistsId",
                         column: x => x.ArtistsId,
-                        principalTable: "Artist",
+                        principalTable: "Artists",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ArtistGenre_Genre_GenresId",
+                        name: "FK_ArtistGenre_Genres_GenresId",
                         column: x => x.GenresId,
-                        principalTable: "Genre",
+                        principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -151,22 +152,22 @@ namespace RecordShop.Api.Migrations
                 name: "GenreTrack",
                 columns: table => new
                 {
-                    GenresId = table.Column<int>(type: "INTEGER", nullable: false),
-                    TracksId = table.Column<int>(type: "INTEGER", nullable: false)
+                    GenresId = table.Column<int>(type: "int", nullable: false),
+                    TracksId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GenreTrack", x => new { x.GenresId, x.TracksId });
                     table.ForeignKey(
-                        name: "FK_GenreTrack_Genre_GenresId",
+                        name: "FK_GenreTrack_Genres_GenresId",
                         column: x => x.GenresId,
-                        principalTable: "Genre",
+                        principalTable: "Genres",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GenreTrack_Track_TracksId",
+                        name: "FK_GenreTrack_Tracks_TracksId",
                         column: x => x.TracksId,
-                        principalTable: "Track",
+                        principalTable: "Tracks",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -192,8 +193,8 @@ namespace RecordShop.Api.Migrations
                 column: "TracksId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Track_AlbumId",
-                table: "Track",
+                name: "IX_Tracks_AlbumId",
+                table: "Tracks",
                 column: "AlbumId");
         }
 
@@ -213,13 +214,13 @@ namespace RecordShop.Api.Migrations
                 name: "GenreTrack");
 
             migrationBuilder.DropTable(
-                name: "Artist");
+                name: "Artists");
 
             migrationBuilder.DropTable(
-                name: "Genre");
+                name: "Genres");
 
             migrationBuilder.DropTable(
-                name: "Track");
+                name: "Tracks");
 
             migrationBuilder.DropTable(
                 name: "Albums");
