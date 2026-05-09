@@ -24,7 +24,9 @@ namespace RecordShop.Api.Data
                     .HasMaxLength(150);
                 entity.Property(a => a.Price)
                     .IsRequired()
-                    .HasColumnType("decimal(18, 2)");
+                    .HasColumnType("decimal(9, 2)");
+
+                entity.ToTable(t => t.HasCheckConstraint("CK_Price_MaxLimit", "[Price] <= 2000000.00"));
             });
 
             var albumsJson = File.ReadAllText(_albumFilePath);
