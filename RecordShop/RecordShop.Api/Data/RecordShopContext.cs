@@ -19,9 +19,10 @@ namespace RecordShop.Api.Data
                 entity.Property(a => a.Title)
                     .IsRequired()
                     .HasMaxLength(150);
-                entity.Property(a => a.Artist)
+                entity.Property(a => a.Description)
                     .IsRequired()
-                    .HasMaxLength(150);
+                    .HasMaxLength(250);
+                entity.Property(a => a.ReleaseDate);
                 entity.Property(a => a.Price)
                     .IsRequired()
                     .HasPrecision(9, 2);
