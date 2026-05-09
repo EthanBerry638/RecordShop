@@ -158,7 +158,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
         {
             int id = 1;
             var testRequest = new PutAlbumRequest("Test", "Test", null, 4M);
-            var testResponse = new PutAlbumResponse(1, "Test New", "Test New", new DateOnly(2024, 23, 4), 4M);
+            var testResponse = new PutAlbumResponse(1, "Test New", "Test New", new DateOnly(2024, 2, 4), 4M);
 
             _albumServiceMock.Setup(a => a.PutAlbumAsync(testRequest, id)).ReturnsAsync(testResponse);
 
