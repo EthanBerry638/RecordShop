@@ -1,6 +1,6 @@
 # RecordShop API 💿
 
-API for managing a record shop inventory
+RESTful API for managing a record shop inventory
 
 ## Features 🎶
 
@@ -23,17 +23,21 @@ Testing: NUnit, Fluent Assertions and Moq
 ## Getting Started 📖
 
 1. Clone the repository
-2. Set environment variables in launchSettings.json to 'Development'
-3. Run dotnet run
-4. Open https://localhost:7091/swagger to view and test endpoints
-*Note: Data is in memory and will seed automatically on application restart*
+2. Run `dotnet run`
+3. Open `https://localhost:7091/swagger` to view and test endpoints
 
-Alternatively, you could set environment variables to Production and use a tool like Postman to test the endpoints
+NOTE: By default, the API runs in a `Development` environment using an in-memory SQLite database
+
+**To use a persistent SQL Server database:**
+1. Update `appsettings.Production.json` with your local SQL server connection string
+2. Change the `ASPNETCORE_ENVIRONMENT` variable in `Properties/launchSettings.json` to `Production`
+3. Run the application. EF Core will automatically apply the migration
+
+NOTE: Both the in-memory SQLite database and the persistent SQL Server database will be seeded by default.
+If you wish to change this, find `database.SeedData()` inside Program.cs and either move it to the `else` block or comment/delete it.
 
 ## Roadmap 🛣️
 
-Refactor to use DTOs for GET endpoints
-
-Relational Database Schema: Genres, Artists, Users
+Relational endpoints e.g. Get Albums by Artist
 
 JWT Authentication
