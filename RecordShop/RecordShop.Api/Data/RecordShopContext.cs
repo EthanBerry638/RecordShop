@@ -7,7 +7,6 @@ namespace RecordShop.Api.Data
     public class RecordShopContext : DbContext
     {
         private readonly string _albumFilePath = "Resources\\albums.json";
-
         public DbSet<Album> Albums { get; set; }
         public RecordShopContext(DbContextOptions options) : base(options) { }
 
@@ -29,13 +28,20 @@ namespace RecordShop.Api.Data
 
                 entity.ToTable(t => t.HasCheckConstraint("CK_Price_MaxLimit", "[Price] <= 2000000.00"));
             });
+        }
 
-            var albumsJson = File.ReadAllText(_albumFilePath);
-            var albums = JsonSerializer.Deserialize<List<Album>>(albumsJson);
-
-            if (albums != null)
+        public void SeedData()
+        {
+            if (!Albums.Any())
             {
-                modelBuilder.Entity<Album>().HasData(albums);
+                var jsonAlbums = File.ReadAllText(_albumFilePath);
+                var albums = JsonSerializer.Deserialize<List<Album>>(jsonAlbums);
+
+                if (albums != null)
+                {
+                    Albums.AddRange(albums);
+                    SaveChanges();
+                }
             }
         }
     }

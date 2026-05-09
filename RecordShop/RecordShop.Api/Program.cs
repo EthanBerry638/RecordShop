@@ -56,6 +56,8 @@ using (var scope = app.Services.CreateScope())
     {
         dbContext.Database.EnsureCreated();
     }
+
+    dbContext.SeedData();
 }
 
 if (app.Environment.IsDevelopment())
