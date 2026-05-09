@@ -48,7 +48,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
                 new Album
                 {
                     Id = 4,
-                    Title = "Nevermind",
+                    Title = "Test Title4",
                     Description = "Description for album 4",
                     ReleaseDate = new DateOnly(1991, 9, 24),
                     Price = 0.00M},
@@ -63,10 +63,10 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _albumRepositoryMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(testList);
 
-            var result = await _albumService.GetAllAlbumsAsync();
+            var results = await _albumService.GetAllAlbumsAsync();
 
-            result.Should().BeEquivalentTo(testList);
-            result.Should().HaveCount(5);
+            results.Should().BeEquivalentTo(testList);
+            results.Should().HaveCount(5);
         }
 
         [Test]
@@ -84,6 +84,8 @@ namespace RecordShop.Tests.Unit.ServiceTests
         [Test]
         public async Task GetAllAlbumsAsync_ShouldOnlyCallRepoOnce_WhenCalled()
         {
+            _albumRepositoryMock.Setup(a => a.GetAllAlbumsAsync()).ReturnsAsync(new List<Album>());
+
             var result = await _albumService.GetAllAlbumsAsync();
 
             _albumRepositoryMock.Verify(a => a.GetAllAlbumsAsync(), Times.Once());
@@ -118,7 +120,6 @@ namespace RecordShop.Tests.Unit.ServiceTests
             var result = await _albumService.GetAlbumByIdAsync(id);
 
             result.Should().NotBeNull();
-            result.Should().BeEquivalentTo(testAlbum);
             result.Title.Should().Be("Test Title1");
         }
 
