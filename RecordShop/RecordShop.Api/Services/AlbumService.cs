@@ -28,13 +28,14 @@ namespace RecordShop.Api.Services
             var postedAlbum = new Album
             {
                 Title = postAlbumDTO.Title,
-                Artist = postAlbumDTO.Artist,
+                Description = postAlbumDTO.Description,
+                ReleaseDate = postAlbumDTO.ReleaseDate,
                 Price = postAlbumDTO.Price
             };
 
             var postResult = await _albumRepository.PostAlbumAsync(postedAlbum);
 
-            return new PostAlbumResponse(postResult.Id, postResult.Title, postResult.Artist, postResult.Price);
+            return new PostAlbumResponse(postResult.Id, postResult.Title, postResult.Description, postResult.ReleaseDate, postResult.Price);
         }
 
         public async Task<PutAlbumResponse?> PutAlbumAsync(PutAlbumRequest putAlbumDTO, int id)
@@ -47,12 +48,13 @@ namespace RecordShop.Api.Services
             }
 
             albumToUpdate.Title = putAlbumDTO.Title;
-            albumToUpdate.Artist = putAlbumDTO.Artist;
+            albumToUpdate.Description = putAlbumDTO.Description;
+            albumToUpdate.ReleaseDate = putAlbumDTO.ReleaseDate;
             albumToUpdate.Price = putAlbumDTO.Price;
 
             var putResult = await _albumRepository.PutAlbumAsync(albumToUpdate);
 
-            return new PutAlbumResponse(putResult.Id, putResult.Title, putResult.Artist, putResult.Price);
+            return new PutAlbumResponse(putResult.Id, putResult.Title, putResult.Description, putResult.ReleaseDate, putResult.Price);
         }
 
         public async Task<bool> DeleteAlbumByIdAync(int id)
