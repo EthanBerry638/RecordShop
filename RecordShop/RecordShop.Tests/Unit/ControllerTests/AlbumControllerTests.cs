@@ -89,7 +89,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _albumController.GetAllAlbumsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as List< Album>;
+            var value = okResult.Value as List<Album>;
 
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(testList);

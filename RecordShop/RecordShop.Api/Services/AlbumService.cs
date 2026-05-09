@@ -30,6 +30,8 @@ namespace RecordShop.Api.Services
         {
             var album = await _albumRepository.GetAlbumByIdAsync(id);
 
+            if (album == null) return null;
+
             return new GetAlbumResponse
             (
                 album!.Id,
