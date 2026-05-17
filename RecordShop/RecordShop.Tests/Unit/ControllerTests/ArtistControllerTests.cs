@@ -83,18 +83,22 @@ namespace RecordShop.Tests.Unit.ControllerTests
             _artistServiceMock.Verify(a => a.GetArtistByIdAsync(id), Times.Once());
         }
 
-        //[Test]
-        //public async Task GetArtistByIdAsync_ShouldReturnOkWithArtist_WhenServiceReturnsArtist()
-        //{
-        //    int id = 10000;
+        [Test]
+        public async Task GetArtistByIdAsync_ShouldReturnOkWithArtist_WhenServiceReturnsArtist()
+        {
+            int id = 1;
 
-        //    var expectedArtist = new GetArtistResponse(id, "test", "test", 40);
+            var expectedArtist = new GetArtistResponse(id, "test", "test", 40);
 
-        //    _artistServiceMock.Setup(a => a.GetArtistByIdAsync(id)).ReturnsAsync((GetArtistResponse)null!);
+            _artistServiceMock.Setup(a => a.GetArtistByIdAsync(id)).ReturnsAsync(expectedArtist);
 
-        //    var result = await _artistController.GetArtistByIdAsync(id);
+            var result = await _artistController.GetArtistByIdAsync(id);
 
-        //    var okResult = result.Should().BeOfType<OkResult>().Subject;
-        //}
+            var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
+            var value = okResult.Value as GetAlbumResponse;
+
+            value.Should().NotBeNull();
+            value.Should().BeEquivalentTo(expectedArtist);
+        }
     }
 }
