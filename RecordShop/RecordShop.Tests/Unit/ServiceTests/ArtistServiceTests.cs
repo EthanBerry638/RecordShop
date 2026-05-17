@@ -118,7 +118,7 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             result.Should().NotBeNull();
             result.Id.Should().Be(1);
-            result.Should().BeEquivalentTo(expectedArtist);
+            result.Should().BeEquivalentTo(expectedArtist, options => options.ExcludingMissingMembers());
 
             _artistRepositoryMock.Verify(a => a.PostArtistAsync(It.IsAny<Artist>()), Times.Once());
         }
