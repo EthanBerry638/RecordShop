@@ -29,6 +29,8 @@ builder.Services.AddHealthChecks()
 
 builder.Services.AddScoped<IAlbumRepository, AlbumRepository>();
 builder.Services.AddScoped<IAlbumService, AlbumService>();
+builder.Services.AddScoped<IArtistService, ArtistService>();
+builder.Services.AddScoped<IArtistRepository, ArtistRepository>();
 
 builder.Services.AddTransient<ExceptionMiddleware>();
 builder.Services.AddTransient<LoggingMiddleware>();
