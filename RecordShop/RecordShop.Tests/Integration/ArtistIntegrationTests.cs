@@ -76,5 +76,35 @@ namespace RecordShop.Tests.Integration
             artists[0].Name.Should().Be("Michael Jackson");
             artists.Should().NotBeEmpty();
         }
+
+        [Test]
+        public async Task GetArtistByIdAsyncEndpoint_ReturnsNotFound_WhenArtistDoesNotExist()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/Artist/10000");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
+
+        [Test]
+        public async Task GetArtistByIdAsyncEndpoint_ReturnsOkWithArtist_WhenArtistIsFound()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/Artist/1");
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.OK);
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var artist = JsonSerializer.Deserialize<GetArtistResponse>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            artist.Should().NotBeNull();
+            artist.Name.Should().Be("Michael Jackson");
+        }
     }
 }
