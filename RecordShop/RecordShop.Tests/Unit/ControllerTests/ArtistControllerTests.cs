@@ -100,5 +100,19 @@ namespace RecordShop.Tests.Unit.ControllerTests
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(expectedArtist);
         }
+
+        [Test]
+        public async Task PostArtistAsync_ShouldReturnCreated_WhenServiceReturnsDTO()
+        {
+            var testRequest = new PostArtistRequest("Test", "Test", 20);
+            var testResponse = new PostArtistResponse(1, "Test", "Test", 20);
+
+            _artistServiceMock.Setup(a => a.PostArtistAsync(testRequest)).ReturnsAsync(testResponse);
+
+            var result = await _artistController.PostArtistAsync(testRequest);
+
+            var createdResult = result.Should().BeOfType<CreatedAtActionResult>().Subject;
+            createdResult.RouteValues!["id"].Should().Be(1);
+        }
     }
 }

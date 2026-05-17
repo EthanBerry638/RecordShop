@@ -37,7 +37,7 @@ namespace RecordShop.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostAlbumAsync([FromBody]PostAlbumRequest request)
+        public async Task<IActionResult> PostArtistAsync([FromBody]PostArtistRequest request)
         {
             return BadRequest();
         }
