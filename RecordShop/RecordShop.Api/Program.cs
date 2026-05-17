@@ -8,15 +8,10 @@ using RecordShop.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-if (builder.Environment.IsProduction())
-{
-    builder.Configuration.AddUserSecrets<Program>();
-}
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-
 if (builder.Environment.IsDevelopment())
 {
+    var connectionString = builder.Configuration.GetConnectionString("SqliteConnection");
+
     var keepAliveConnection = new SqliteConnection(connectionString);
     keepAliveConnection.Open();
 
@@ -25,6 +20,9 @@ if (builder.Environment.IsDevelopment())
 }
 else
 {
+    builder.Configuration.AddUserSecrets<Program>();
+    var connectionString = builder.Configuration.GetConnectionString("SqlServerConnection");
+    
     builder.Services.AddDbContext<RecordShopContext>(options =>
              options.UseSqlServer(connectionString));
 }
