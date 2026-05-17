@@ -80,5 +80,23 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _artistRepositoryMock.Verify(a => a.GetArtistByIdAsync(id), Times.Once());
         }
+
+        [Test]
+        public async Task GetArtistByIdAsync_ShouldMapArtistToDTO_WhenRepoMethodIsCalledAndReturnsAnArtist()
+        {
+            int id = 1;
+
+            var artist = new Artist { Id = id, Name = "Test Name", Bio = "Test Bio", Age = 20 };
+            var artistDto = new GetArtistResponse(id, "Test Name", "Test Bio", 20);
+
+            _artistRepositoryMock.Setup(a => a.GetArtistByIdAsync(id)).ReturnsAsync(artist);
+
+            var result = await _artistService.GetArtistByIdAsync(id);
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(artistDto);
+
+            _artistRepositoryMock.Verify(a => a.GetArtistByIdAsync(id), Times.Once());
+        }
     }
 }
