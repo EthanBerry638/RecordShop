@@ -7,6 +7,7 @@ namespace RecordShop.Api.Data
     public class RecordShopContext : DbContext
     {
         private readonly string _albumFilePath = "Resources\\albums.json";
+        private readonly string _artistFilePath = "Resources\\artists.json";
         public DbSet<Album> Albums { get; set; }
         public DbSet<Artist> Artists { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -63,6 +64,17 @@ namespace RecordShop.Api.Data
                 if (albums != null)
                 {
                     Albums.AddRange(albums);
+                    SaveChanges();
+                }
+            }
+            if (!Artists.Any())
+            {
+                var jsonArtists = File.ReadAllText(_artistFilePath);
+                var artists = JsonSerializer.Deserialize<List<Artist>>(jsonArtists);
+
+                if (artists != null)
+                {
+                    Artists.AddRange(artists);
                     SaveChanges();
                 }
             }
