@@ -8,6 +8,11 @@ using RecordShop.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+if (builder.Environment.IsProduction())
+{
+    builder.Configuration.AddUserSecrets<Program>();
+}
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (builder.Environment.IsDevelopment())
