@@ -63,5 +63,15 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             result.Should().BeEquivalentTo(expectedArtists, options => options.ExcludingMembersNamed("Id"));
         }
+
+        [Test]
+        public async Task GetArtistByIdAsync_ShouldReturnNull_WhenArtistDoesNotExist()
+        {
+            int id = 100000;
+
+            var result = await _artistRepository.GetArtistByIdAsync(id);
+
+            result.Should().BeNull();
+        }
     }
 }
