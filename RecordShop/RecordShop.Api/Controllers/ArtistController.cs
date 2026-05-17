@@ -39,7 +39,13 @@ namespace RecordShop.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> PostArtistAsync([FromBody]PostArtistRequest request)
         {
-            return BadRequest();
+            var artist = await _artistService.PostArtistAsync(request);
+
+            return CreatedAtAction(
+                nameof(GetArtistByIdAsync),
+                new { Id = artist.Id },
+                artist
+            );
         }
     }
 }
