@@ -17,7 +17,9 @@ namespace RecordShop.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllArtistsAsync()
         {
-            return BadRequest();
+            var artists = await _artistService.GetAllArtistsAsync();
+
+            return Ok(artists);
         }
     }
 }

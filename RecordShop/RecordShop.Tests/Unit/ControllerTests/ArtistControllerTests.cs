@@ -35,7 +35,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _artistController.GetAllArtistsAsync();
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as List<GetAlbumResponse>;
+            var value = okResult.Value as List<GetArtistResponse>;
 
             value.Should().NotBeNull();
             value.Should().BeEmpty();
