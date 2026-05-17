@@ -73,5 +73,24 @@ namespace RecordShop.Tests.Unit.RepositoryTests
 
             result.Should().BeNull();
         }
+
+        [Test]
+        public async Task GetArtistByIdAsync_ShouldReturnArtist_WhenArtistDoesExist()
+        {
+            int id = 1;
+
+            var expectedArtist = new Artist 
+            { 
+                Id = id,
+                Name = "Michael Jackson", 
+                Bio = "An American singer, songwriter, and dancer. Dubbed the 'King of Pop', he is regarded as one of the most significant cultural figures of the 20th century.",
+                Age = 50 
+            };
+
+            var result = await _artistRepository.GetArtistByIdAsync(id);
+
+            result.Should().NotBeNull();
+            result.Should().BeEquivalentTo(expectedArtist);
+        }
     }
 }
