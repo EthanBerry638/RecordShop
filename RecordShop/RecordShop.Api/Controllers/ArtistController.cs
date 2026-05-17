@@ -25,7 +25,7 @@ namespace RecordShop.Api.Controllers
         [HttpGet("{id:min(1)}")]
         public async Task<IActionResult> GetArtistByIdAsync(int id)
         {
-            return BadRequest();
+            return NotFound();
         }
     }
 }
