@@ -14,7 +14,9 @@ namespace RecordShop.Api.Repositories
 
         public async Task<List<Artist>> GetAllArtistsAsync()
         {
-            return null;
+            var artists = new List<Artist>();
+
+            return artists;
         }
     }
 }
