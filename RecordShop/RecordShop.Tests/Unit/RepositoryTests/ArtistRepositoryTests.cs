@@ -57,11 +57,11 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         public async Task GetAllArtistsAsync_ShouldReturnListOfArtists_WhenDatabaseIsSeeded()
         {
             var jsonString = File.ReadAllText("Resources\\artists.json");
-            var expectedAlbums = JsonSerializer.Deserialize<List<Artist>>(jsonString);
+            var expectedArtists = JsonSerializer.Deserialize<List<Artist>>(jsonString);
 
             var result = await _artistRepository.GetAllArtistsAsync();
 
-            result.Should().BeEquivalentTo(expectedAlbums, options => options.ExcludingMembersNamed("Id"));
+            result.Should().BeEquivalentTo(expectedArtists, options => options.ExcludingMembersNamed("Id"));
         }
     }
 }
