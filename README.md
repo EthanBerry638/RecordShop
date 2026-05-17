@@ -31,10 +31,11 @@ Testing: NUnit, Fluent Assertions and Moq
 NOTE: By default, the API runs in a `Development` environment using an in-memory SQLite database
 
 **To use a persistent SQL Server database:**
-1. To run the API in a `Production` environment locally, you must provide your own SQL Server connection string using .NET User Secrets.
+1. To run the API in a `Production` environment locally, you must provide your own SQL Server connection string using .NET User Secrets
 2. Run the following command in the `RecordShop.Api` directory to initialize secrets:
    
    dotnet user-secrets set "ConnectionStrings:DefaultConnection" "Server=YOUR_SERVER;Database=RecordShop;User Id=YOUR_USER;Password=YOUR_PASSWORD;Trust Server Certificate=True;"
+3. Change the ASPNETCORE_ENVIRONMENT variable in Properties/launchSettings.json to Production
 
 NOTE: Both the in-memory SQLite database and the persistent SQL Server database will be seeded by default.
 If you wish to change this, find `database.SeedData()` inside Program.cs and either move it to the `else` block or comment/delete it.
