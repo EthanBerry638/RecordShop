@@ -6,6 +6,7 @@ using Moq;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace RecordShop.Tests.Integration
@@ -105,6 +106,29 @@ namespace RecordShop.Tests.Integration
 
             artist.Should().NotBeNull();
             artist.Name.Should().Be("Michael Jackson");
+        }
+
+        [Test]
+        public async Task PostArtistAsyncEndpoint_ReturnsCreatedAtAction_WhenArtistDTOIsValid()
+        {
+            var client = _factory.CreateClient();
+            var request = new PostArtistRequest("test", "test", 23);
+
+            var response = await client.PostAsJsonAsync("api/Artist", request);
+
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.Created);
+
+            var content = await response.Content.ReadAsStringAsync();
+            var createdArtist = JsonSerializer.Deserialize<PostArtistResponse>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            createdArtist.Should().NotBeNull();
+            createdArtist.Id.Should().BeGreaterThan(0);
+            createdArtist.Name.Should().Be(request.Name);
+            createdArtist.Bio.Should().Be(request.Bio);
+            createdArtist.Age.Should().Be(request.Age);
         }
     }
 }
