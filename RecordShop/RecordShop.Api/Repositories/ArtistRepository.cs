@@ -1,4 +1,5 @@
-﻿using RecordShop.Api.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 
 namespace RecordShop.Api.Repositories
@@ -14,9 +15,7 @@ namespace RecordShop.Api.Repositories
 
         public async Task<List<Artist>> GetAllArtistsAsync()
         {
-            var artists = new List<Artist>();
-
-            return artists;
+            return await _db.Artists.ToListAsync();
         }
     }
 }
