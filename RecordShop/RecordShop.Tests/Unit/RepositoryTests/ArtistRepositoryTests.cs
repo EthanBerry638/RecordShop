@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
 using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
+using System.Text.Json;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
 {
@@ -50,6 +51,17 @@ namespace RecordShop.Tests.Unit.RepositoryTests
             var result = await _artistRepository.GetAllArtistsAsync();
 
             result.Should().BeEquivalentTo(expectedList);
+        }
+
+        [Test]
+        public async Task GetAllArtistsAsync_ShouldReturnListOfArtists_WhenDatabaseIsSeeded()
+        {
+            var jsonString = File.ReadAllText("Resources\\artists.json");
+            var expectedAlbums = JsonSerializer.Deserialize<List<Artist>>(jsonString);
+
+            var result = await _artistRepository.GetAllArtistsAsync();
+
+            result.Should().BeEquivalentTo(expectedAlbums, options => options.ExcludingMembersNamed("Id"));
         }
     }
 }
