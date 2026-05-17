@@ -34,6 +34,23 @@ namespace RecordShop.Api.Data
                     entity.ToTable(t => t.HasCheckConstraint("CK_Price_MaxLimit", "[Price] <= 2000000.00"));
                 }
             });
+
+            modelBuilder.Entity<Artist>(entity =>
+            {
+                entity.HasKey(a => a.Id);
+                entity.Property(a => a.Name)
+                    .IsRequired()
+                    .HasMaxLength(150);
+                entity.Property(a => a.Bio)
+                    .HasMaxLength(500);
+                entity.Property(a => a.Age)
+                    .IsRequired();
+
+                if (!Database.IsSqlite())
+                {
+                    entity.ToTable(t => t.HasCheckConstraint("CK_Artist_Age_MaxLimit", "[Age] <= 120"));
+                }
+            });
         }
 
         public void SeedData()
