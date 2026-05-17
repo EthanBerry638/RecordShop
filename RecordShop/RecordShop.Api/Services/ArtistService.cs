@@ -26,6 +26,8 @@ namespace RecordShop.Api.Services
 
         public async Task<GetArtistResponse?> GetArtistByIdAsync(int id)
         {
+            var artist = await _artistRepository.GetArtistByIdAsync(id);
+
             return null;
         }
     }
