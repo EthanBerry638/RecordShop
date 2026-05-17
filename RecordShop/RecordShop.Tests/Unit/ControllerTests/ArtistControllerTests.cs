@@ -68,5 +68,17 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             _artistServiceMock.Verify(a => a.GetAllArtistsAsync(), Times.Once());  
         }
+
+        [Test]
+        public async Task GetArtistByIdAsync_ShouldReturnNotFound_WhenServiceReturnsNull()
+        {
+            int id = 10000;
+
+            _artistServiceMock.Setup(a => a.GetArtistByIdAsync(id)).ReturnsAsync((GetArtistResponse)null!);
+
+            var result = await _artistController.GetArtistByIdAsync(id);
+
+            var notFoundResult = result.Should().BeOfType<NotFoundResult>().Subject;
+        }
     }
 }
