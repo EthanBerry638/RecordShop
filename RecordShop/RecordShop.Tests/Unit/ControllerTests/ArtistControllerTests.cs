@@ -39,6 +39,8 @@ namespace RecordShop.Tests.Unit.ControllerTests
 
             value.Should().NotBeNull();
             value.Should().BeEmpty();
+
+            _artistServiceMock.Verify(a => a.GetAllArtistsAsync(), Times.Once());
         }
 
         [Test]
@@ -63,6 +65,8 @@ namespace RecordShop.Tests.Unit.ControllerTests
             value.Should().NotBeNull();
             value.Should().NotBeEmpty();
             value.Should().BeEquivalentTo(testList);
+
+            _artistServiceMock.Verify(a => a.GetAllArtistsAsync(), Times.Once());  
         }
     }
 }
