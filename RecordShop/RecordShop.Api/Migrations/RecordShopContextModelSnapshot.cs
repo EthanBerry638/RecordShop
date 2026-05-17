@@ -139,7 +139,7 @@ namespace RecordShop.Api.Migrations
 
                     b.ToTable("Artists", t =>
                         {
-                            t.HasCheckConstraint("CK_Artist_Age_MaxLimit", "[Age] <= 120");
+                            t.HasCheckConstraint("CK_Artist_Age_Range", "[Age] >=1 AND [Age] <= 120");
                         });
                 });
 
