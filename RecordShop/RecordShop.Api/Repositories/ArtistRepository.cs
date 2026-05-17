@@ -25,7 +25,9 @@ namespace RecordShop.Api.Repositories
 
         public async Task<Artist> PostArtistAsync(Artist artist)
         {
-            return null;
+            await _db.Artists.AddAsync(artist);
+            await _db.SaveChangesAsync(); 
+            return artist;
         }
     }
 }
