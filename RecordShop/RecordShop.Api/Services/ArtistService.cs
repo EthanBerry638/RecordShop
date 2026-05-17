@@ -28,7 +28,18 @@ namespace RecordShop.Api.Services
         {
             var artist = await _artistRepository.GetArtistByIdAsync(id);
 
-            return null;
+            if (artist == null)
+            {
+                return null;
+            }
+
+            return new GetArtistResponse
+            (
+                artist.Id,
+                artist.Name,
+                artist.Bio,
+                artist.Age
+            );
         }
     }
 }
