@@ -1,4 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.TestHost;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
+using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
+using RecordShop.Api.Repositories;
+using System.Text.Json;
 
 namespace RecordShop.Tests.Integration
 {
@@ -18,6 +26,55 @@ namespace RecordShop.Tests.Integration
             _factory.Dispose();
         }
 
+        [Test]
+        public async Task GetAllArtistsAsyncEndpoint_ReturnsOkAndEmptyList_WhenDatabaseIsEmpty()
+        {
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureTestServices(services =>
+                {
+                    var mockRepo = new Mock<IArtistRepository>();
 
+                    mockRepo.Setup(r => r.GetAllArtistsAsync()).ReturnsAsync(new List<Artist>());
+
+                    services.AddScoped(_ => mockRepo.Object);
+                });
+            }).CreateClient();
+
+            var response = await client.GetAsync("api/Artist");
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var artists = JsonSerializer.Deserialize<List<GetArtistResponse>>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            artists.Should().NotBeNull();
+            artists.Should().BeEmpty();
+        }
+
+        [Test]
+        public async Task GetAllArtistsAsyncEndpoint_ReturnsOkAndWholeList_WhenDatabaseIsSeeded()
+        {
+            var client = _factory.CreateClient();
+
+            var response = await client.GetAsync("api/Artist");
+
+            response.EnsureSuccessStatusCode();
+
+            var content = await response.Content.ReadAsStringAsync();
+
+            var artists = JsonSerializer.Deserialize<List<GetArtistResponse>>(content, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            artists.Should().NotBeNull();
+            artists[0].Name.Should().Be("Michael Jackson");
+            artists.Should().NotBeEmpty();
+        }
     }
 }
