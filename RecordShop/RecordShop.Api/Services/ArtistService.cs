@@ -43,7 +43,7 @@ namespace RecordShop.Api.Services
             );
         }
 
-        public async Task<PostArtistResponse?> PostArtistAsync(PostArtistRequest request)
+        public async Task<PostArtistResponse> PostArtistAsync(PostArtistRequest request)
         {
             var artist = new Artist
             {
