@@ -14,7 +14,14 @@ namespace RecordShop.Api.Services
 
         public async Task<List<GetArtistResponse>> GetAllArtistsAsync()
         {
-            return null;
+            var artists = await _artistRepository.GetAllArtistsAsync();
+
+            return artists.Select(a => new GetArtistResponse
+            (   a.Id,
+                a.Name,
+                a.Bio,
+                a.Age
+            )).ToList();
         }
     }
 }
