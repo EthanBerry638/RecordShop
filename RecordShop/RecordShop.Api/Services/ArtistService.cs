@@ -23,5 +23,10 @@ namespace RecordShop.Api.Services
                 a.Age
             )).ToList();
         }
+
+        public async Task<GetArtistResponse?> GetArtistByIdAsync(int id)
+        {
+            return null;
+        }
     }
 }

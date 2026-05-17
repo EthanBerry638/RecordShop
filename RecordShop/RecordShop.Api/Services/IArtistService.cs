@@ -5,5 +5,6 @@ namespace RecordShop.Api.Services
     public interface IArtistService
     {
         Task<List<GetArtistResponse>> GetAllArtistsAsync();
+        Task<GetArtistResponse?> GetArtistByIdAsync(int id);
     }
 }

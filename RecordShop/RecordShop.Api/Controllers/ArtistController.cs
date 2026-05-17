@@ -21,5 +21,11 @@ namespace RecordShop.Api.Controllers
 
             return Ok(artists);
         }
+
+        [HttpGet("{id:min(1)}")]
+        public async Task<IActionResult> GetArtistByIdAsync(int id)
+        {
+            return BadRequest();
+        }
     }
 }
