@@ -27,7 +27,12 @@ namespace RecordShop.Api.Controllers
         {
             var artist = await _artistService.GetArtistByIdAsync(id);
 
-            return NotFound();
+            if (artist == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(artist);
         }
     }
 }

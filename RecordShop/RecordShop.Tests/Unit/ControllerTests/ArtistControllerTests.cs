@@ -95,7 +95,7 @@ namespace RecordShop.Tests.Unit.ControllerTests
             var result = await _artistController.GetArtistByIdAsync(id);
 
             var okResult = result.Should().BeOfType<OkObjectResult>().Subject;
-            var value = okResult.Value as GetAlbumResponse;
+            var value = okResult.Value as GetArtistResponse;
 
             value.Should().NotBeNull();
             value.Should().BeEquivalentTo(expectedArtist);
