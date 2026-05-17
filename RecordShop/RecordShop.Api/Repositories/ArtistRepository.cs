@@ -20,7 +20,7 @@ namespace RecordShop.Api.Repositories
 
         public async Task<Artist?> GetArtistByIdAsync(int id)
         {
-            return null;
+            return await _db.Artists.FindAsync(id);
         }
     }
 }
