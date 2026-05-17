@@ -66,5 +66,19 @@ namespace RecordShop.Tests.Unit.ServiceTests
 
             _artistRepositoryMock.Verify(a => a.GetAllArtistsAsync(), Times.Once());
         }
+
+        [Test]
+        public async Task GetArtistByIdAsync_ShouldReturnNullAndNotThrowAnException_WhenRepoMethodIsCalledAndReturnsNull()
+        {
+            int id = 10000;
+
+            _artistRepositoryMock.Setup(a => a.GetArtistByIdAsync(id)).ReturnsAsync((Artist)null!);
+
+            var result = await _artistService.GetArtistByIdAsync(id);
+
+            result.Should().BeNull();
+
+            _artistRepositoryMock.Verify(a => a.GetArtistByIdAsync(id), Times.Once());
+        }
     }
 }
