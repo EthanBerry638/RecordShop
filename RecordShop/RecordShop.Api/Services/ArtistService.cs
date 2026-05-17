@@ -41,5 +41,10 @@ namespace RecordShop.Api.Services
                 artist.Age
             );
         }
+
+        public async Task<PostArtistResponse?> PostArtistAsync(PostArtistRequest request)
+        {
+            return null;
+        }
     }
 }
