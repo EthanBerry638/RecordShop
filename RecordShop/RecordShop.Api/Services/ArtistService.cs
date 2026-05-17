@@ -1,4 +1,5 @@
-﻿using RecordShop.Api.Models.DTOs;
+﻿using RecordShop.Api.Models.DataModels;
+using RecordShop.Api.Models.DTOs;
 using RecordShop.Api.Repositories;
 
 namespace RecordShop.Api.Services
@@ -44,7 +45,16 @@ namespace RecordShop.Api.Services
 
         public async Task<PostArtistResponse?> PostArtistAsync(PostArtistRequest request)
         {
-            return null;
+            var artist = new Artist
+            {
+                Name = request.Name,
+                Bio = request.Bio,
+                Age = request.Age
+            };
+
+            var response = await _artistRepository.PostArtistAsync(artist);
+
+            return new PostArtistResponse(response.Id, response.Name, response.Bio!, response.Age);
         }
     }
 }
