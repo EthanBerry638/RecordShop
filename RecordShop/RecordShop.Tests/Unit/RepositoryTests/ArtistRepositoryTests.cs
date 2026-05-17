@@ -1,6 +1,8 @@
-﻿using Microsoft.Data.Sqlite;
+﻿using FluentAssertions;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using RecordShop.Api.Data;
+using RecordShop.Api.Models.DataModels;
 using RecordShop.Api.Repositories;
 
 namespace RecordShop.Tests.Unit.RepositoryTests
@@ -35,6 +37,19 @@ namespace RecordShop.Tests.Unit.RepositoryTests
         {
             _context.Dispose();
             _connection.Dispose();
+        }
+
+        [Test]
+        public async Task GetAllArtistsAsync_ShouldReturnEmptyList_WhenArtistTableIsEmpty()
+        {
+            var expectedList = new List<Artist>();
+
+            _context.Artists.RemoveRange(_context.Artists);
+            await _context.SaveChangesAsync();
+
+            var result = await _artistRepository.GetAllArtistsAsync();
+
+            result.Should().BeEquivalentTo(expectedList);
         }
     }
 }
